@@ -1,0 +1,17 @@
+char --> char
+intege --> int
+longint --> long int
+word --> unsigned int
+real --> float
+double --> double
+
+Luego printF para que funcione necesita que le especifiquemos que tipo de dato tiene que imprimir, por ello, diferentes tipos de datos usan diferentes cadenas de formato
+
+TIPO | BYTES | CADENA DE FORMATO
+
+char --> char 1 byte %c
+intege --> int 4 bytes %d
+longint --> long int 8 bytes %ld 
+word --> unsigned int 4 bytes %hu
+real --> float 4 bytes %f
+double --> double 8 bytes %lf
