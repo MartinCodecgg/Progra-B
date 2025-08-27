@@ -4,7 +4,7 @@
 
 int main() {
 
-    int a = 8,b = 6, c = 7;
+    int a = 10,b = 20, c = 30;
 
     if (valida(a,b) == 1) {
 
@@ -24,5 +24,7 @@ int main() {
         else
             printf("No son Consecutivos");
     }
+    else
+        printf("No son Consecutivos");
     return 0;
 }
