@@ -4,7 +4,7 @@ int valida(int a,int b, int c); //poner los parametros igual al nombre las varia
 
 int main() {
 
-    int a = 6,b = 7, c = 8;
+    int a = 1,b = 2, c = 3;
 
     valida(a,b,c) ? printf("Consecutivos") : printf("NO Consecutivos"); //valida(a,b,c) llama a una funcion, no es una expresion, no lleva parentesis aqui
 
@@ -15,11 +15,11 @@ int valida(int a,int b, int c) {
 
     return
         ((b == a+1) && (c == b+1)) || //123
-        ((b == a+1) && (c == b+1)) || //132
-        ((b == a+1) && (c == b+1)) || //213
-        ((b == a+1) && (c == b+1)) || //231
-        ((b == a+1) && (c == b+1)) || //312
-        ((b == a+1) && (c == b+1))    //321
+        ((b == c+1) && (c == a+1)) || //132
+        ((c == a+1) && (a == b+1)) || //213
+        ((b == a+1) && (a == c+1)) || //231
+        ((c == b+1) && (a == c+1)) || //312
+        ((a == b+1) && (b == c+1))    //321
         ;
 
         //no usar un if aqui, que retorne el resultado de toda la expresion, el return ya de por si
