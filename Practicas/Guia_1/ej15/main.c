@@ -1,30 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
-#define valida(n1,n2)( (n1 == n2+1 || n1 == n2-1) ? 1 : 0 )
+
+int valida(int a,int b, int c); //poner los parametros igual al nombre las variables, esto no trae problemas
 
 int main() {
 
-    int a = 10,b = 20, c = 30;
+    int a = 6,b = 7, c = 8;
 
-    if (valida(a,b) == 1) {
+    valida(a,b,c) ? printf("Consecutivos") : printf("NO Consecutivos"); //valida(a,b,c) llama a una funcion, no es una expresion, no lleva parentesis aqui
 
-        if (valida(a,c) == 1)
-            printf("Consecutivos");
-
-        else if (valida(b,c) == 1)
-            printf("Consecutivos");
-
-        else
-            printf("No son Consecutivos");
-    }
-    else if (valida(b,c) == 1) {
-
-        if (valida(a,c) == 1)
-            printf("Consecutivos");
-        else
-            printf("No son Consecutivos");
-    }
-    else
-        printf("No son Consecutivos");
     return 0;
+}
+
+int valida(int a,int b, int c) {
+
+    return (                                //no usar un if aqui, que retorne el resultado de toda la expresion
+        ((b == a+1) && (c == b+1)) || //123
+        ((b == a+1) && (c == b+1)) || //132
+        ((b == a+1) && (c == b+1)) || //213
+        ((b == a+1) && (c == b+1)) || //231
+        ((b == a+1) && (c == b+1)) || //312
+        ((b == a+1) && (c == b+1))    //321
+        );
 }
