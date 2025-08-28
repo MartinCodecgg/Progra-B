@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 //Reescribir las siguientes sentencias utilizando la instrucción switch:
 

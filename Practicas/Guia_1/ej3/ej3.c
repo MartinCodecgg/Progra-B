@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-#include <conio.h>
-
 int main() {
 
 //a
@@ -38,18 +36,5 @@ printf(" %c ", num); //el codigo ASCII 15 es no legible, no imprime nada
 num = 5 + 'A'; //err la constante no puede cambiar de valor , aunque el codigo se ejecuta igual
 printf(" %d ", num);
 printf(" %c ", num);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

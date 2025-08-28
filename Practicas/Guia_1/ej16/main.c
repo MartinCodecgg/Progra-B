@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 void print_hms(long long total_segundos) {
 
