@@ -13,12 +13,15 @@ int main() {
 
 int valida(int a,int b, int c) {
 
-    return (                                //no usar un if aqui, que retorne el resultado de toda la expresion
+    return
         ((b == a+1) && (c == b+1)) || //123
         ((b == a+1) && (c == b+1)) || //132
         ((b == a+1) && (c == b+1)) || //213
         ((b == a+1) && (c == b+1)) || //231
         ((b == a+1) && (c == b+1)) || //312
         ((b == a+1) && (c == b+1))    //321
-        );
+        ;
+
+        //no usar un if aqui, que retorne el resultado de toda la expresion, el return ya de por si
+        // engloba toda la expresio  en un parentesis, por ello no hace falta hacer return ()
 }
