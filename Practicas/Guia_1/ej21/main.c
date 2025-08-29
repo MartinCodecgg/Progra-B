@@ -7,7 +7,7 @@ void generaV(unsigned int v[], unsigned int *n, unsigned int *k, unsigned int v2
 
 void muestraV(unsigned int v2[], unsigned int *n2);
 
-unsigned int buscar(unsigned int vec[], unsigned int *n, unsigned int *x);
+int buscar(unsigned int vec[], unsigned int *n, unsigned int *x);
 
 int main() {
 
@@ -43,13 +43,13 @@ int main() {
     }                            //y dado que necesito tanto el v2 como n2, tengo que devolver dos cosas y seria un "procedimiento"
 
     else {
-        unsigned int x, aux;
+        int x, aux; // x puede ser negativo y aux debe devolver -1 en casos de no encontrar
         printf("\nIngrese X\n"); //recordar que si quiero solo dejar un espacio antes debo poner \n y luego el texto directamente
         scanf("%u",&x);
 
         aux = buscar(v,&n,&x); //usar siempre buscar y no busca para estas funciones de busqueda
 
-        if (aux)
+        if (aux != -1)
             printf("La posicion del valor ingresado es: %u",aux);
         else
             printf("El valor ingresado no existe en el vector");
@@ -87,12 +87,12 @@ void muestraV(unsigned int v2[], unsigned int *n2) {
     }
 }
 
-unsigned int buscar(unsigned int v[], unsigned int *n, unsigned int *x) { //intentar usar v siempre, de forma generica
+int buscar(unsigned int v[], unsigned int *n, unsigned int *x) { //intentar usar v siempre, de forma generica
 
     unsigned short i;
     for (i = 0; i<*n; ++i) {
         if (v[i] == *x)
             return i;
     }
-    return 0;
+    return -1;
 }
