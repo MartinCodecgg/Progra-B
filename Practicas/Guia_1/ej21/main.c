@@ -62,39 +62,34 @@ int main() {
 void muestraImpares(unsigned int v[], unsigned int *n) {
 
     unsigned short int i;
-    for (i = 0; i<*n; ++i) {
+    for (i = 0; i<*n; ++i)  //Cuando for cuando tiene una sola sentencia son opcionales sus llavess
         if (i % 2 != 0)
             printf("%u \t",v[i]);
-    }
 }
 
 void generaV(unsigned int v[], unsigned int *n, unsigned int *k, unsigned int v2[], unsigned int *n2) {
 
     unsigned short i;
-    for (i = 0; i<*n ;++i) {   //Recordar para mostrar asignar un vector a otro con un for el proceso es
+    for (i = 0; i<*n ;++i)    //Recordar para mostrar asignar un vector a otro con un for el proceso es
         if (v[i] % *k == 0) {   //ASIGNO => IMPRIMO => AUMENTO N y N debe estar inicializado en cero, de otro modo un bug
             v2[*n2] = v[i];
             *n2 += 1;
         }
-    }
 }
 
 void muestraV(unsigned int v2[], unsigned int *n2) {
 
     unsigned short int i;
-    for (i = 0; i<*n2; ++i) {
+    for (i = 0; i<*n2; ++i)
         printf("%u ",v2[i]);
-    }
 }
 
 int buscar(unsigned int v[], unsigned int *n, unsigned int *x) { //intentar usar v siempre, de forma generica
                                                                     //no salir con return/break en for y la busqueda es siempre con while
     unsigned short i = 0;
 
-    while (v[i] != *x && i<*n) {
+    while (v[i] != *x && i<*n)
             ++i;
-    }
 
     return (i < *n) ? i : -1; //recordar hacer return a la expresion y no usar return en el operador ternario, ya que es una sentencia y no una EXPRESION
-
 }
