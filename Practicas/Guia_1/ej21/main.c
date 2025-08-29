@@ -88,11 +88,16 @@ void muestraV(unsigned int v2[], unsigned int *n2) {
 }
 
 int buscar(unsigned int v[], unsigned int *n, unsigned int *x) { //intentar usar v siempre, de forma generica
+                                                                    //no salir con return/break en for y la busqueda es siempre con while
+    unsigned short i = 0;
 
-    unsigned short i;
-    for (i = 0; i<*n; ++i) {
-        if (v[i] == *x)
-            return i;
+    while (v[i] != *x && i<*n) {
+            ++i;
     }
-    return -1;
+
+    if (i<*n)
+        return i;
+    else
+        return -1;
+
 }
