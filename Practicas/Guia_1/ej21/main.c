@@ -95,9 +95,6 @@ int buscar(unsigned int v[], unsigned int *n, unsigned int *x) { //intentar usar
             ++i;
     }
 
-    if (i<*n)
-        return i;
-    else
-        return -1;
+    return (i < *n) ? i : -1; //recordar hacer return a la expresion y no usar return en el operador ternario, ya que es una sentencia y no una EXPRESION
 
 }
