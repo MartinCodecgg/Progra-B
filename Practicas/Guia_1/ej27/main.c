@@ -34,18 +34,16 @@ int main() {
 void obtieneArray(int mat[][TOP], unsigned short n, unsigned short m, Tinfo array[],unsigned short *nArray) {
 
     unsigned short i,j;
-    Tinfo auxStruct;
 
     for(i = 0; i<n; ++i)
         for(j = 0; j<m; ++j)
-            if (mat[i][j] % (n+m) == 0) {
+            if (mat[i][j] % (n+m) == 0) { //RECORDAR que en C es valida la asignacion directa de registros a un array
 
-                auxStruct.fila = i;
-                auxStruct.col = j;
-                auxStruct.val = mat[i][j];
+                array[*nArray].fila = i;
+                array[*nArray].col = j;
+                array[*nArray].val = mat[i][j];
 
-                array[*nArray] = auxStruct;
-
-                *nArray +=1;
+                (*nArray)++; //recordar si trabajo con punteros y quiero hacerle una operacion,aplicar
+                             //primero parentesis para primero obtener el valor y luego hacer la operacion
             }
 }
