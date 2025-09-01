@@ -48,5 +48,6 @@ int main() {
                     printf("%7s %hu %hu %s\n",pat,vel,max,fecha);
         }
     }
+    fclose(binario);
     return 0;
 }
