@@ -8,8 +8,8 @@ int main() {
 
     float temp1 = 25.2, temp2 = 30.0, temp3 = 50.1;
 
-    generaBinario(temp1,temp2,temp3);
-    leerBinario();
+    generaBinario(temp1,temp2,temp3); //En ambos procedimientos se verifica que se hallan abierto bien los archivos
+    leerBinario();                    //Entonces no debo preguntar aqui si se creo correctamente para abrirlo
 
     return 0;
 }
@@ -39,7 +39,6 @@ void leerBinario() {
         printf("Error al crear el archivo \n");
 
     else {
-
         printf("Archivo abierto correctamente \n");
 
         while ( fread(&temp,sizeof(float),1,arch) == 1 ) {

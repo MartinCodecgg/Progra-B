@@ -9,15 +9,21 @@ int main() {
     //Genero archivo binario desde txt
 
     FILE * arch = fopen("ranking.txt","rt");
-    FILE * binario = fopen("ranking.dat","wb");
     char apelYnom[TOP], nacio[TOP];
     float punt;
 
     if (arch == NULL)
         printf("Error al abrir el archivo de texto");
 
-    else {
+    else { //este else debe englobar todo el codigo, ya que no tiene sentido seguir ejecutando si no genere el binario
         printf("Archivo de texto abierto correctamente \n");
+        FILE * binario = fopen("ranking.dat","wb");
+
+        if (binario == NULL)
+            printf("Error al crear archivo binario");
+
+        else {
+            printf("archivo binario abierto correctamente \n");
         /*
         while( fscanf(arch,"%[^\n]%s\n%f\n",apelYnom,nacio,&punt) == 3) { //No se puede leer con scanf usando [^\n] intermedio, solo al final es valido
             fwrite(apelYnom,TOP * sizeof(char),1,binario);
@@ -40,7 +46,7 @@ int main() {
         }
         fclose(binario);
         fclose(arch);
-    }
+
 
     //Una vez generado el archivo binario para el ejercicio
 
@@ -50,6 +56,8 @@ int main() {
     scanf("%u",&pos);
 
     busca(pos);
+    }
+    }
 
     return 0;
 }

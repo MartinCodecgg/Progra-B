@@ -24,9 +24,9 @@ int main() {
         sum = 0;
         while( fscanf(arch,"%d\n",&num) == 1 ) //debo siempre verificar que devuelva 1 si uso el metodo alternativo ya que cuando llega al
             sum += num;                      //fin de archivo puede devolver numeros negativos y estos se evaluan como true para el while
-    } //Vemos que para leer numeros que estan diferentes lineas, bastara con poner (sin dejar espacios) /n
+     //Vemos que para leer numeros que estan diferentes lineas, bastara con poner (sin dejar espacios) /n
 
-    printf("La suma de los numeros del archivo es %d",sum);
-
+        printf("La suma de los numeros del archivo es %d",sum);
+    }
     return 0;
 }

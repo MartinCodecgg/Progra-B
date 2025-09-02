@@ -3,16 +3,23 @@
 int main() {
 
     FILE * arch = fopen("radar.txt","rt");
-    FILE * binario = fopen("multas.dat","wb");
     char pat[8]; //añadir un byte mas para el caracter nulo
     char fecha[17];
     unsigned short int vel,max,generados = 0, cont = 0;
 
-    if (arch == NULL || binario == NULL)
+    if (arch == NULL)
         printf("Error al abrir el archivo");
 
     else {
-        printf("archivos abiertos/creados correctamente \n");
+        printf("archivo de texto abierto correctamente \n");
+        FILE * binario = fopen("multas.dat","wb");
+
+        if (binario == NULL)
+            printf("Error al crear archivo binario");
+
+        else {
+        printf("archivo binario abierto correctamente \n");
+
         while (fscanf(arch,"%7s %hu %hu %[^\n]\n",pat,&vel,&max,fecha) == 4) {
                 if (vel > 1.2 * max) {
                     fwrite(pat,7 * sizeof(char),1, binario); //pat ya es un puntero, no hace falta usar &
@@ -28,7 +35,6 @@ int main() {
 
         fclose(arch);
         fclose(binario);
-    }
 
     //Adicional muestro el binario generado
 
@@ -49,5 +55,7 @@ int main() {
         }
     }
     fclose(binario);
+    }
+    }
     return 0;
 }

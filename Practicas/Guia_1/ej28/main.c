@@ -24,9 +24,8 @@ int main() {
         sum = 0;
         while( fscanf(arch,"%d",&num) == 1 ) //debo siempre verificar que devuelva 1 si uso el metodo alternativo ya que cuando llega al
             sum += num;                      //fin de archivo puede devolver numeros negativos y estos se evaluan como true para el while
+
+        printf("La suma de los numeros del archivo es %d",sum);
     }
-
-    printf("La suma de los numeros del archivo es %d",sum);
-
     return 0;
 }
