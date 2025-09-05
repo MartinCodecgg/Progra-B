@@ -5,7 +5,6 @@
 int main() {
 
     int* array[TOP];
-    int* ptr;
     unsigned n = 0;
     int num;
     FILE* arch = fopen("enteros.txt","rt");
@@ -16,10 +15,8 @@ int main() {
         printf("archivo abierto correctamente para lectura\n");
 
         while ( fscanf(arch,"%d\n",&num) == 1 ) {
-
-            ptr = (int*) malloc(sizeof(int));
-            *ptr = num;
-            array[n] = ptr;
+            array[n] = (int*) malloc(sizeof(int));
+            *array[n] = num;
             n += 1;
         }
 

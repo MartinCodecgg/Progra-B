@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <string.h>
-#define TOP 20
+#define TOP 21
 
+#pragma pack(push,1)
 typedef struct {
     char ciudad[TOP];
     unsigned short dia;
     float tempMax,tempMin;
 } Treg;
+#pragma pack(pop)
 
 int main() {
-
+/*
     //genero binario
     FILE* arch = fopen("temperaturas.txt","rt");
     Treg reg;
@@ -17,8 +19,7 @@ int main() {
     if (arch == NULL)
         printf("Error al abrir el archivo de texto\n");
 
-    else {
-        FILE* binario = fopen("temperaturas.dat","wt"); //abrir el binario solo si abrio correctamente el archivo de texto
+        FILE* binario = fopen("temperaturas2.dat","wb"); //abrir el binario solo si abrio correctamente el archivo de texto
         while( fscanf(arch,"%20s %hu %f %f", reg.ciudad, &reg.dia, &reg.tempMax,&reg.tempMin) == 4) {
 
             printf("%20s %hu %3.2f %3.2f\n",reg.ciudad, reg.dia, reg.tempMax,reg.tempMin);
@@ -27,10 +28,12 @@ int main() {
         fclose(arch);
         fclose(binario);
 
+*/
 
     //Binario creado => Comienza ejercicio
 
-    binario = fopen("temperaturas.dat","rt");
+    FILE * binario = fopen("temperaturas8_2.dat","rb");
+    Treg reg;
     unsigned short diaMin;
     float tempMin = 99999;
     char ciudadMin[TOP];
@@ -53,7 +56,6 @@ int main() {
         }
         printf("La ciudad con menor temperatura en el mes fue %20s en el dia %hu \n",ciudadMin,diaMin);
     }
-  }
 
     return 0;
 }
