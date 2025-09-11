@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1757625933 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_3\ej1\main.c
+	<stdio.h>
+	"fracciones.h"
+
+1757626074 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_3\ej1\fracciones.c
+	<stdio.h>
+	"fracciones.h"
+
+1757625605 c:\users\defin\documents\archivos github\progra-b\practicas\guia_3\ej1\fracciones.h
+
+1757626098 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_4\ej1\main.c
+	<stdio.h>
+	"fracciones.h"
+
+1757625605 c:\users\defin\documents\archivos github\progra-b\practicas\guia_4\ej1\fracciones.h
+
+1757627030 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_4\ej1\fracciones.c
+	<stdio.h>
+	"fracciones.h"
+

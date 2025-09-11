@@ -1,0 +1,10 @@
+#ifndef PILAS_H_INCLUDED
+#define PILAS_H_INCLUDED
+
+#endif // PILAS_H_INCLUDED
+
+void IniciaP (TPila * P);
+void poneP (TPila * P, TElementoP x);
+void sacaP (TPila * P, TElementoP * x);
+TElementoP consultaP(TPila P);
+int VaciaP (TPila P);
