@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1758155250 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1_c(tda para cola estatica)\main.c
+	<stdio.h>
+	"colas.h"
+
+1758155952 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1_c(tda para cola estatica)\colas.h
+	<stdio.h>
+
+1758155964 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1_c(tda para cola estatica)\colas.c
+	"colas.h"
+	<stdio.h>
+
