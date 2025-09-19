@@ -69,8 +69,7 @@ void sumaP(TPila *P1,TPila *P2) {
         sacaP(P1,&cad1);
 
         num = cad1 - '0' + prestado;
-        if(prestado != 0)
-            prestado = 0;
+        prestado = 0;
 
         aux = num + '0';
         poneP(&Paux, aux);
@@ -81,14 +80,12 @@ void sumaP(TPila *P1,TPila *P2) {
         sacaP(P2,&cad2);
 
         num = cad2 - '0' + prestado;
-        if(prestado != 0)
-            prestado = 0;
+        prestado = 0;
 
         aux = num + '0';
         poneP(&Paux, aux);
     }
 
-    //Adicional muestro el numero generado
     printf("Muestro la suma\n");
     while(!VaciaP(Paux)) {
         sacaP(&Paux,&aux);
