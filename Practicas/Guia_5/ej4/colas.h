@@ -22,4 +22,8 @@ void sacaC (TCola *C, TElementoC *X);
 
 TElementoC consultaC (TCola C);
 
-void cargaC(TCola C);
+void cargaC(TCola *C);
+
+void muestraEnteros(TCola *C);
+
+void muestraManteniendo(TCola *C);

@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1758290847 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2_impldinamica\pilas_dinamica.c
+	<stdio.h>
+	<stdlib.h>
+	"pilas_dinamica.h"
+
+1758290908 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2_impldinamica\pilas_dinamica.h
+
+1758290617 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2_impldinamica\main.c
+	<stdio.h>
+	"pilas_dinamica.h"
+

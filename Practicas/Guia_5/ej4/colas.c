@@ -31,7 +31,7 @@ if (C.pri !=-1)
 return C.datos[C.pri];
 }
 
-void cargaC(TCola C) {
+void cargaC(TCola *C) {
 
     FILE* arch = fopen("numeros.txt","rt");
 
@@ -39,13 +39,36 @@ void cargaC(TCola C) {
         printf("Ocurrio un error al abrir el archivo");
     else {
         TElementoC elem;
-        printf("Archivo abierto correctamente");
+        printf("Archivo abierto correctamente\n");
 
         while(fscanf(arch,"%d\n",&elem) == 1 ) {
-            poneC(&C,elem);
-            printf("%d",elem);
+            poneC(C,elem);
+            //printf("%d\n",elem);
         }
     }
 }
 
+void muestraEnteros(TCola *C) {
+
+    TElementoC elem;
+
+    while(!VaciaC(*C)) {
+        sacaC(C,&elem);
+        printf("%d\n",elem);
+    }
+
+}
+
+void muestraManteniendo(TCola *C) {
+
+    TElementoC elem, centinela = 9999;
+    poneC(C,centinela);
+    sacaC(C,&elem);
+    while(elem != centinela) {
+        printf("%d\n",elem);
+        poneC(C,elem);
+        sacaC(C,&elem);
+    }
+
+}
 

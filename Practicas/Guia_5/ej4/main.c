@@ -9,7 +9,11 @@ int main() {
 
     IniciaC(&C);
 
-    Carga(&C);
+    cargaC(&C);
+
+    //muestraEnteros(&C); //DESCOMENTAR PARA PROBAR EL EJERCICIO A, porque destruye la informacion necesaria para el c
+
+    muestraManteniendo(&C);
 
 
 

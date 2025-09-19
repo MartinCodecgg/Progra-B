@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1758290332 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2\main.c
+	<stdio.h>
+	"pilas.h"
+
+1758290086 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2\pilas.h
+
+1758290302 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej7_ej2\pilas.c
+	"pilas.h"
+	<stdio.h>
+

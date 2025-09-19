@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1758199614 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej4\main.c
+	<stdio.h>
+	"colas.h"
+
+1758199462 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej4\colas.h
+	<stdio.h>
+
+1758199602 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej4\colas.c
+	<stdio.h>
+	"colas.h"
+
