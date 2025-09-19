@@ -24,32 +24,15 @@ void IniciaP (TPila *P) {
 (*P).tope=-1;
 }
 
-void cargaP1(TPila *P) {
+void cargaP(TPila *P,char archivo[]) {
 
     TElementoP elem;
-    FILE* arch = fopen("entero.txt","rt");
+    FILE* arch = fopen(archivo,"rt");
 
     if(arch == NULL)
         printf("Error al abrir");
     else {
         printf("Muestro carga de primer archivo\n");
-        while(fscanf(arch,"%c\n",&elem) == 1) {
-            poneP(P,elem);
-            printf("%c\n",elem);
-        }
-    }
-}
-
-void cargaP2(TPila *P) {
-
-    TElementoP elem;
-    FILE* arch = fopen("entero2.txt","rt");
-
-    if(arch == NULL)
-        printf("Error al abrir");
-    else {
-        printf("Muestro carga de 2do archivo archivo\n");
-
         while(fscanf(arch,"%c\n",&elem) == 1) {
             poneP(P,elem);
             printf("%c\n",elem);

@@ -17,7 +17,6 @@ void sacaP (TPila * P, TElementoP * x);
 TElementoP consultaP(TPila P);
 int VaciaP (TPila P);
 
-void cargaP1(TPila *P);
-void cargaP2(TPila *P);
+void cargaP(TPila *P,char archivo[]);
 
 void sumaP(TPila *P1,TPila *P2);
