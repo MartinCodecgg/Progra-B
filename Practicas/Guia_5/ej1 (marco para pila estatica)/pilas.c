@@ -1,8 +1,5 @@
-#define MAX 50
-typedef int TElementoP;
-typedef struct {
-TElementoP datos[MAX];
-int tope; } TPila;
+#include <stdio.h>
+#include "pilas.h"
 
 void poneP(TPila *P, TElementoP x) {
  if ( ((*P).tope)!= MAX-1)
@@ -16,7 +13,9 @@ void sacaP(TPila *P, TElementoP* x) {
 
 TElementoP consultaP(TPila P) {
  if (P.tope != -1)
- return P.datos[P.tope];
+    return P.datos[P.tope];
+ else
+    return -1;
 }
 
 int VaciaP(TPila P) {

@@ -13,7 +13,9 @@ void sacaP(TPila *P, TElementoP* x) {
 
 TElementoP consultaP(TPila P) {
  if (P.tope != -1)
- return P.datos[P.tope];
+    return P.datos[P.tope];
+ else
+    return -1;
 }
 
 int VaciaP(TPila P) {

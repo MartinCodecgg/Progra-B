@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1758316639 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1 (marco para pila estatica)\main.c
+	<stdio.h>
+	"pilas.h"
+
+1758316763 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1 (marco para pila estatica)\pilas.h
+
+1758316751 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej1 (marco para pila estatica)\pilas.c
+	<stdio.h>
+	"pilas.h"
+

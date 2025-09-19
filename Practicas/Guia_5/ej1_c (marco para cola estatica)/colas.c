@@ -27,6 +27,8 @@ void sacaC (TCola *C, TElementoC *X) {
  }
 }
 TElementoC consultaC (TCola C){
-if (C.pri !=-1)
-return C.datos[C.pri];
+ if (C.pri !=-1)
+  return C.datos[C.pri];
+ else
+    return -1;
 }

@@ -3,10 +3,9 @@
 
 #endif // COLAS_H_INCLUDED
 
-#include <stdio.h>
 #define MAX 50
 
-typedef long TElementoC; //si voy a leer numeros grandes procurar usar long y no usar float, porque mierdo precision
+typedef int TElementoC; //si voy a leer numeros grandes procurar usar long y no usar float, porque mierdo precision
 
 typedef struct {
 TElementoC datos[MAX];

@@ -1,0 +1,21 @@
+En principio se usa implementaciones estáticas cuando sabemos la cantidad de elementos, en otro caso implementaciones dinamicas
+
+
+=== TDA Pila Estatica ===
+
+"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1 (marco para pila estatica)\pilas.h"
+
+=== TDA Pila Dinamica ===
+
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.c"
+
+=== TDA Cola Estatica ===
+
+"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1_c (marco para cola estatica)\colas.h"
+
+=== TDA Cola Dinamica ===
+
+=== TDA Cola Estatica Circular ===
+
+ 
