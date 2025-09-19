@@ -5,7 +5,7 @@
 
 #endif // PILAS_H_INCLUDED
 
-typedef char TElementoP;
+typedef int TElementoP;
 
 typedef struct nodop {
 TElementoP dato;

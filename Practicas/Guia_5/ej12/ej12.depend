@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1758323519 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej12\main.c
+1758325341 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej12\main.c
 	<stdio.h>
 	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.h"
 	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.c"
 
-1758323467 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda pila dinamica\pilas.h
+1758324169 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda pila dinamica\pilas.h
 
 1758319637 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda pila dinamica\pilas.c
 	<stdio.h>
