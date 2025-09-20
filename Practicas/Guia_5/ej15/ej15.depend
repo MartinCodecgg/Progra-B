@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1758343177 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\ej15\main.c
+	<stdio.h>
+	<ctype.h>
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA_PILA_DINAMICA_DECADENADECARACTERES\pilas.h"
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA_PILA_DINAMICA_DECADENADECARACTERES\pilas.c"
+
+1758342716 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_pila_dinamica_decadenadecaracteres\pilas.h
+
+1758342723 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_pila_dinamica_decadenadecaracteres\pilas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pilas.h"
+

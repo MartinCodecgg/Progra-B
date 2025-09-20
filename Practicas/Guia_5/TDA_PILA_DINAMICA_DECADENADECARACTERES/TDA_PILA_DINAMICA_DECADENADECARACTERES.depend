@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1758340411 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_pila_dinamica_decadenadecaracteres\pilas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pilas.h"
+
+1758339861 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_pila_dinamica_decadenadecaracteres\main.c
+	<stdio.h>
+	"pilas.h"
+
+1758340315 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_pila_dinamica_decadenadecaracteres\pilas.h
+
