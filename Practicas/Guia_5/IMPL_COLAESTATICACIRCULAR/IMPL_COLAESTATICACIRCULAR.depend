@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1758332199 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\main.c
+	<stdio.h>
+	"colas.h"
+
+1758332822 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.h
+
+1758332214 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.c
+	"colas.h"
+	<stdio.h>
+	<stdlib.h>
+

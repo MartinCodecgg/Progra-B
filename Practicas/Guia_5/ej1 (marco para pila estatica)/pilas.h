@@ -5,10 +5,12 @@
 
 #define MAX 50
 
-typedef int TElementoP;
-typedef struct {
+typedef char TElementoP;
+
+typedef struct TPila{
 TElementoP datos[MAX];
-int tope; } TPila;
+int tope;
+} TPila;
 
 void IniciaP (TPila * P);
 void poneP (TPila * P, TElementoP x);

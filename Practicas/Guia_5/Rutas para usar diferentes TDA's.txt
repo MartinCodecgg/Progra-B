@@ -3,7 +3,8 @@ En principio se usa implementaciones estáticas cuando sabemos la cantidad de el
 
 === TDA Pila Estatica ===
 
-"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1 (marco para pila estatica)\pilas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1 (marco para pila estatica)\pilas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1 (marco para pila estatica)\pilas.c"
 
 === TDA Pila Dinamica ===
 
@@ -12,10 +13,14 @@ En principio se usa implementaciones estáticas cuando sabemos la cantidad de el
 
 === TDA Cola Estatica ===
 
-"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1_c (marco para cola estatica)\colas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1_c (marco para cola estatica)\colas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\ej1_c (marco para cola estatica)\colas.c"
 
 === TDA Cola Dinamica ===
 
 === TDA Cola Estatica Circular ===
+
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.h"
+#include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.c"
 
  
