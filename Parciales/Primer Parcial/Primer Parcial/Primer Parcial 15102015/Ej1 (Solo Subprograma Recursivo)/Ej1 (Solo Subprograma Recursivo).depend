@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1745146555 source:/home/enzo/Archivos/Facultad/Programacion B/Estudio dentro de cuatrimestre/Primer Parcial/Primer Parcial 15102015 (Sin hacer)/Ej1 (Solo Subprograma Recursivo)/main.c
+	<stdio.h>
+	<stdlib.h>
+	"PilaEstatica.h"
+
+1744387755 /home/enzo/Archivos/Facultad/Programacion B/Estudio dentro de cuatrimestre/Primer Parcial/Primer Parcial 15102015 (Sin hacer)/Ej1 (Solo Subprograma Recursivo)/PilaEstatica.h
+
+1744389108 source:/home/enzo/Archivos/Facultad/Programacion B/Estudio dentro de cuatrimestre/Primer Parcial/Primer Parcial 15102015 (Sin hacer)/Ej1 (Solo Subprograma Recursivo)/PilaEstatica.c
+	<stdio.h>
+	<stdlib.h>
+	"PilaEstatica.h"
+
