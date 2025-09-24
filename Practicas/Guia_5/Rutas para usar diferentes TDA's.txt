@@ -23,4 +23,11 @@ En principio se usa implementaciones estáticas cuando sabemos la cantidad de el
 #include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.h"
 #include "C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.c"
 
+
+==== OTRAS IMPLEMENTACIONES ===
+
+TDA_PILA_DINAMICA_CADENADECARACTERES
+
+
+
  

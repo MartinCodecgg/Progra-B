@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1758736865 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_6\ej1\main.c
+	<stdio.h>
+	"../TDA CREA_LISTA/Crea_Listas.h"
+	"../TDA CREA_LISTA/Crea_Listas.c"
+
+1758735891 c:\users\defin\documents\archivos github\progra-b\practicas\guia_6\tda crea_lista\crea_listas.h
+
+1758737088 c:\users\defin\documents\archivos github\progra-b\practicas\guia_6\tda crea_lista\crea_listas.c
+	<stdio.h>
+	<stdlib.h>
+	"Crea_Listas.h"
+
