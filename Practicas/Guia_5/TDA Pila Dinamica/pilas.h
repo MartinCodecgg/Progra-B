@@ -5,7 +5,9 @@
 
 #endif // PILAS_H_INCLUDED
 
-typedef int TElementoP;
+#include "../TDA_TELEMENTO/Telemento.h"
+
+typedef TElemento TElementoP;
 
 typedef struct nodop {
 TElementoP dato;

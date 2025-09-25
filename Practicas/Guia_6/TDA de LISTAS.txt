@@ -1,3 +1,5 @@
 
-#include "../TDA CREA_LISTA/Crea_Listas.h"
-#include "../TDA CREA_LISTA/Crea_Listas.c"
+TDA para crear listas, de tipo de dato simple no array
+
+#include "../TDA_CREA+MUESTRA_LISTA/TDA_CREA+MUESTRA_LISTA.h"
+#include "../TDA_CREA+MUESTRA_LISTA/TDA_CREA+MUESTRA_LISTA.c"

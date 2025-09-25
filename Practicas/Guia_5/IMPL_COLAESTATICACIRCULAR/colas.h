@@ -3,9 +3,11 @@
 
 #endif // COLAS_H_INCLUDED
 
+#include "../TDA_TELEMENTO/Telemento.h"
+
 #define MAX 50
 
-typedef char TElementoC;
+typedef TElemento TElementoC;
 
 typedef struct TCola{
 TElementoC datos[MAX];

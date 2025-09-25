@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1758829251 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_6\ej5\main.c
+	<stdio.h>
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.h"
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\TDA Pila Dinamica\pilas.c"
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.h"
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.c"
+
+1758827988 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda pila dinamica\pilas.h
+	"../TDA_TELEMENTO/Telemento.h"
+
+1758319637 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda pila dinamica\pilas.c
+	<stdio.h>
+	<stdlib.h>
+	"pilas.h"
+
+1758828014 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.h
+	"../TDA_TELEMENTO/Telemento.h"
+
+1758332214 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.c
+	"colas.h"
+	<stdio.h>
+	<stdlib.h>
+
+1758827903 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_telemento\telemento.h
+

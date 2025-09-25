@@ -5,7 +5,7 @@
 
 #define MAX 50
 
-typedef char TElementoP[MAX];
+typedef int TElementoP[MAX];
 
 typedef struct nodop {
 TElementoP dato;
