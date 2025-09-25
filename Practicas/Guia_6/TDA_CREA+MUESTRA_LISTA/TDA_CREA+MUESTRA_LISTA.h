@@ -1,5 +1,5 @@
-#ifndef CREA_LISTAS_H_INCLUDED
-#define CREA_LISTAS_H_INCLUDED
+#ifndef TDA_CREA_MUESTRA_LISTA_H_INCLUDED
+#define TDA_CREA_MUESTRA_LISTA_H_INCLUDED
 
 typedef char TElementoL;
 
@@ -10,5 +10,6 @@ typedef nodo * TLista;
 
 void creaL(TLista *L,TElementoL array[], int n);
 
-#endif // CREA_LISTAS_H_INCLUDED
+void muestraL(TLista L);
 
+#endif // TDA_CREA+MUESTRA_LISTA_H_INCLUDED

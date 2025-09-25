@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="TDA CREA_LISTA" />
+		<Option title="TDA_CREA+MUESTRA_LISTA" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="TDA_CREA+MUESTRA_LISTA.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="TDA_CREA+MUESTRA_LISTA.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

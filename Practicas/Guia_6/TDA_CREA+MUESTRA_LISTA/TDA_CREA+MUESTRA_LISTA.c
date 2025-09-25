@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Crea_Listas.h"
+#include "TDA_CREA+MUESTRA_LISTA.h"
 
 void creaL(TLista *L,TElementoL array[], int n) {
     TLista aux,ant;
@@ -21,3 +21,13 @@ void creaL(TLista *L,TElementoL array[], int n) {
         aux->sig = NULL;
     }
 }
+
+void muestraL(TLista L) {
+    TLista aux = L;
+
+    while(aux != NULL) {
+        printf("%c\n",aux->dato);
+        aux = aux->sig;
+    }
+}
+
