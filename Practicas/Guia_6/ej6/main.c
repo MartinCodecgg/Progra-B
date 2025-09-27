@@ -210,8 +210,8 @@ int verificar(TLista L,char E[], int P) {
 
     TLista aux = L;
 
-    while(aux != NULL && strcmp(E,aux->nomClub) != 0) {
-        aux = aux->sig;
+    while(aux != NULL && strcmp(E,aux->nomClub) != 0 && P < aux->puntaje) { //la condicion de puntaje es para no buscar de mas, porque
+        aux = aux->sig;                                                 //los equipos estan ordenados por puntaje
     }
     if(aux != NULL && strcmp(E,aux->nomClub) == 0 && aux->puntaje == P)
         return 1;
@@ -276,7 +276,6 @@ void eliminaJugadores_v2(TLista L) {
                     antS->sig = actS->sig;
                     actS = actS->sig;
                 }
-
                 free(elim);
             } else {
                 antS = actS;
