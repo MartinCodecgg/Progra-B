@@ -52,7 +52,7 @@ int main(){
     int x, p;
 
     generaL(&L);
-    /*
+
     printf("\nIngrese K\n");
     scanf(" %c",&k);
     Listado(L,k);
@@ -68,7 +68,7 @@ int main(){
         printf("El equipo tiene la cantidad de puntos ingresados\n");
     else
         printf("El equipo NO tiene la cantidad de puntos ingresados");
-    */
+
     eliminaJugadores(L);
     printf("\nMostrando Jugadores\n");
     muestraL(L);
@@ -158,18 +158,21 @@ void Listado(TLista L, char k) {
     TLista aux = L;
 
     sublista actS;
-    int cont = 0, max = -9999;
+    int cont = 0,contMax, max = -9999;
     Tnombre clubMax;
 
     while(aux != NULL) {
         actS = aux->sub;
+        contMax = 0;
         while(actS != NULL) {
                 if((actS->nombre)[0] == k) {
                     printf("%s\n",actS->nombre);
-                    ++cont;
+                    ++contMax;
                 }
                 actS=actS->sig;
         }
+        cont += contMax;
+        contMax = cont;
         if(cont > max) {
             max = cont;
             strcpy(clubMax,aux->nomClub);
