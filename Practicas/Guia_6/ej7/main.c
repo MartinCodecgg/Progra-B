@@ -1,38 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#define TOP_NOMBRE 30
+#define TOP 50
+#define TOTAL_LETRAS 26 //total letras del abecedario
 
 // Estructura para los libros
-typedef struct libro {
-    char titulo[50];
-    char autor[30];
+typedef struct Libro {
+    char titulo[TOP], autor[TOP_NOMBRE];
     int anio;
-    struct libro * sig;} libro;
-typedef libro * TListaLibros;
+    struct Libro * sig; } Libro;
+typedef Libro * Sublista;
 
-// Estructura para los autores
-typedef struct autor {
-    char nombre[30];
-    struct autor * sig;
-    TListaLibros sublista; } autor; // Sublista de libros del autor
-typedef autor * TListaAutores;
+// Estructura genérica para autores y socios
+typedef struct prop {
+    char nombre[TOP_NOMBRE];
+    Sublista sub;
+    struct prop * sig; } prop;
+typedef prop * TListaP;
 
-// Estructura para los socios
-typedef struct socio {
-    char nombre[30];
-    int numero;
-    struct socio * sig;
-    TListaLibros prestados; } socio;  // Sublista de libros prestados
+// Procedimiento para insertar libro ordenado por título en sublista
+void insertarLibroOrdenado(Sublista *lista, char* titulo, char* autor, int anio) {
+    Sublista nuevo, actual, ant;
 
-typedef socio * TListaSocios;
-
-// Procedimiento para insertar libro ordenado por título en la sublista de un autor
-void insertarLibroOrdenado(TListaLibros *lista, char* titulo, char* autorNombre, int anio) {
-    TListaLibros nuevo, actual, ant;
-
-    nuevo = (TListaLibros)malloc(sizeof(libro));
+    nuevo = (Sublista)malloc(sizeof(Libro));
     strcpy(nuevo->titulo, titulo);
-    strcpy(nuevo->autor, autorNombre);
+    strcpy(nuevo->autor, autor);
     nuevo->anio = anio;
     nuevo->sig = NULL;
 
@@ -51,14 +45,35 @@ void insertarLibroOrdenado(TListaLibros *lista, char* titulo, char* autorNombre,
     }
 }
 
-// Procedimiento para insertar autor ordenado alfabéticamente
-void insertarAutorOrdenado(TListaAutores *lista, char* nombre) {
-    TListaAutores nuevo, actual, ant;
+// Procedimiento para insertar al final de sublista (para libros prestados)
+void insertarLibroAlFinal(Sublista *lista, char* titulo, char* autor, int anio) {
+    Sublista nuevo, actual;
 
-    nuevo = (TListaAutores)malloc(sizeof(autor));
+    nuevo = (Sublista)malloc(sizeof(Libro));
+    strcpy(nuevo->titulo, titulo);
+    strcpy(nuevo->autor, autor);
+    nuevo->anio = anio;
+    nuevo->sig = NULL;
+
+    if (*lista == NULL) {
+        *lista = nuevo;
+    } else {
+        actual = *lista;
+        while (actual->sig != NULL) {
+            actual = actual->sig;
+        }
+        actual->sig = nuevo;
+    }
+}
+
+// Procedimiento para insertar propietario ordenado alfabéticamente
+void insertarPropOrdenado(TListaP *lista, char* nombre) {
+    TListaP nuevo, actual, ant;
+
+    nuevo = (TListaP)malloc(sizeof(prop));
     strcpy(nuevo->nombre, nombre);
     nuevo->sig = NULL;
-    nuevo->sublista = NULL;
+    nuevo->sub = NULL;
 
     if (*lista == NULL || strcmp(nuevo->nombre, (*lista)->nombre) < 0) {
         nuevo->sig = *lista;
@@ -75,21 +90,20 @@ void insertarAutorOrdenado(TListaAutores *lista, char* nombre) {
     }
 }
 
-// Procedimiento para insertar socio
-void insertarSocio(TListaSocios *lista, char* nombre, int numero) {
-    TListaSocios nuevo;
+// Procedimiento para insertar socio (al inicio para simplicidad)
+void insertarSocio(TListaP *lista, char* nombre) {
+    TListaP nuevo;
 
-    nuevo = (TListaSocios)malloc(sizeof(socio));
+    nuevo = (TListaP)malloc(sizeof(prop));
     strcpy(nuevo->nombre, nombre);
-    nuevo->numero = numero;
-    nuevo->prestados = NULL;
+    nuevo->sub = NULL;
     nuevo->sig = *lista;
     *lista = nuevo;
 }
 
-// Procedimiento para buscar autor en una lista
-TListaAutores buscarAutor(TListaAutores lista, char* nombre) {
-    TListaAutores actual;
+// Procedimiento para buscar propietario en lista
+TListaP buscarProp(TListaP lista, char* nombre) {
+    TListaP actual;
 
     actual = lista;
     while (actual != NULL && strcmp(actual->nombre, nombre) != 0) {
@@ -98,9 +112,9 @@ TListaAutores buscarAutor(TListaAutores lista, char* nombre) {
     return actual;
 }
 
-// Procedimiento para mostrar libros de una sublista
-void mostrarLibros(TListaLibros lista) {
-    TListaLibros actual;
+// Procedimiento para mostrar libros de sublista
+void mostrarLibros(Sublista lista) {
+    Sublista actual;
 
     actual = lista;
     while (actual != NULL) {
@@ -109,143 +123,370 @@ void mostrarLibros(TListaLibros lista) {
     }
 }
 
-// Procedimiento para mostrar autores de una lista
-void mostrarAutores(TListaAutores lista) {
-    TListaAutores actual;
+// Procedimiento para mostrar propietarios (autores o socios) y sus libros
+void mostrarProps(TListaP lista, char* tipo) {
+    TListaP actual;
 
     actual = lista;
     while (actual != NULL) {
         printf("  %s:\n", actual->nombre);
-        mostrarLibros(actual->sublista);
-        actual = actual->sig;
-    }
-}
-
-// Procedimiento para mostrar socios
-void mostrarSocios(TListaSocios lista) {
-    TListaSocios actual;
-
-    actual = lista;
-    while (actual != NULL) {
-        printf("Socio %d - %s:\n", actual->numero, actual->nombre);
-        if (actual->prestados != NULL) {
-            printf("  Libros prestados:\n");
-            mostrarLibros(actual->prestados);
+        if (actual->sub != NULL) {
+            if (strcmp(tipo, "socio") == 0) {
+                printf("    Libros prestados:\n");
+            } else {
+                printf("    Libros disponibles:\n");
+            }
+            mostrarLibros(actual->sub);
         } else {
-            printf("  No tiene libros prestados\n");
+            if (strcmp(tipo, "socio") == 0) {
+                printf("    No tiene libros prestados\n");
+            } else {
+                printf("    No tiene libros disponibles\n");
+            }
         }
         printf("\n");
         actual = actual->sig;
     }
 }
 
-// Procedimiento para inicializar biblioteca
-void inicializarBiblioteca(TListaAutores biblioteca[26]) {
+// Procedimiento para inicializar arreglo de biblioteca
+void inicializarBiblioteca(TListaP biblioteca[26]) {
     int i;
     for (i = 0; i < 26; i++) {
         biblioteca[i] = NULL;
     }
 }
 
-// Procedimiento para obtener índice de letra (A=0, B=1, etc.)
-int obtenerIndiceletra(char letra) {
-    if (letra >= 'A' && letra <= 'Z') {
-        return letra - 'A';
-    } else if (letra >= 'a' && letra <= 'z') {
-        return letra - 'a';
+// Procedimiento para obtener índice de letra
+int obtenerIndiceLetra(char letra) {
+    char letraUpper;
+
+    letraUpper = toupper(letra);
+    if (letraUpper >= 'A' && letraUpper <= 'Z') {
+        return letraUpper - 'A';
     }
-    return 0; // Por defecto letra A
+    return 0; // Por defecto A
 }
 
-// Procedimiento para agregar libro a la biblioteca
-void agregarLibroABiblioteca(TListaAutores biblioteca[26], char* titulo, char* autorNombre, int anio) {
+// Procedimiento para agregar libro a biblioteca
+void agregarLibroABiblioteca(TListaP biblioteca[26], char* titulo, char* autor, int anio) {
     int indice;
-    TListaAutores autorEncontrado;
+    TListaP autorEncontrado;
 
-    indice = obtenerIndiceletra(autorNombre[0]);
-    autorEncontrado = buscarAutor(biblioteca[indice], autorNombre);
+    indice = obtenerIndiceLetra(autor[0]);
+    autorEncontrado = buscarProp(biblioteca[indice], autor);
 
     if (autorEncontrado == NULL) {
-        // El autor no existe, crearlo
-        insertarAutorOrdenado(&biblioteca[indice], autorNombre);
-        autorEncontrado = buscarAutor(biblioteca[indice], autorNombre);
+        insertarPropOrdenado(&biblioteca[indice], autor);
+        autorEncontrado = buscarProp(biblioteca[indice], autor);
     }
 
-    // Agregar libro a la sublista del autor
-    insertarLibroOrdenado(&autorEncontrado->sublista, titulo, autorNombre, anio);
+    insertarLibroOrdenado(&autorEncontrado->sub, titulo, autor, anio);
 }
 
 // Procedimiento para cargar datos de prueba
-void cargarDatosPrueba(TListaAutores biblioteca[26], TListaSocios *socios) {
-    // Agregar autores y libros
+void cargarDatosPrueba(TListaP biblioteca[26], TListaP *socios) {
+    // Cargar libros en biblioteca
     agregarLibroABiblioteca(biblioteca, "Fundacion", "Asimov, Isaac", 1951);
     agregarLibroABiblioteca(biblioteca, "Yo, Robot", "Asimov, Isaac", 1950);
     agregarLibroABiblioteca(biblioteca, "El Hombre Bicentenario", "Asimov, Isaac", 1976);
 
     agregarLibroABiblioteca(biblioteca, "Orgullo y Prejuicio", "Austen, Jane", 1813);
     agregarLibroABiblioteca(biblioteca, "Emma", "Austen, Jane", 1815);
+    agregarLibroABiblioteca(biblioteca, "Sentido y Sensibilidad", "Austen, Jane", 1811);
 
     agregarLibroABiblioteca(biblioteca, "El Aleph", "Borges, Jorge Luis", 1949);
     agregarLibroABiblioteca(biblioteca, "Ficciones", "Borges, Jorge Luis", 1944);
+    agregarLibroABiblioteca(biblioteca, "Laberintos", "Borges, Jorge Luis", 1962);
 
     agregarLibroABiblioteca(biblioteca, "Don Quijote de la Mancha", "Cervantes, Miguel", 1605);
+    agregarLibroABiblioteca(biblioteca, "Novelas Ejemplares", "Cervantes, Miguel", 1613);
 
     agregarLibroABiblioteca(biblioteca, "Cien Años de Soledad", "Garcia Marquez, Gabriel", 1967);
     agregarLibroABiblioteca(biblioteca, "El Amor en los Tiempos del Colera", "Garcia Marquez, Gabriel", 1985);
+    agregarLibroABiblioteca(biblioteca, "Cronica de una Muerte Anunciada", "Garcia Marquez, Gabriel", 1981);
 
-    agregarLibroABiblioteca(biblioteca, "1984", "Orwell, George", 1949);
+    agregarLibroABiblioteca(biblioteca, "1984", "George", 1949);
     agregarLibroABiblioteca(biblioteca, "Rebelion en la Granja", "Orwell, George", 1945);
+    agregarLibroABiblioteca(biblioteca, "Homenaje a Cataluña", "Orwell, George", 1938);
 
     // Crear socios
-    insertarSocio(socios, "Martinez, Juan", 1);
-    insertarSocio(socios, "Lopez, Maria", 2);
-    insertarSocio(socios, "Gonzalez, Pedro", 3);
+    insertarSocio(socios, "Martinez");
+    insertarSocio(socios, "Lopez");
+    insertarSocio(socios, "Gonzalez");
+    insertarSocio(socios, "Rodriguez, Ana Sofia");
+    insertarSocio(socios, "Fernandez, Carlos Alberto");
 }
 
 // Procedimiento para mostrar biblioteca completa
-void mostrarBiblioteca(TListaAutores biblioteca[26]) {
+void mostrarBiblioteca(TListaP biblioteca[26]) {
     int i;
 
     printf("=== BIBLIOTECA ORGANIZADA POR LETRAS ===\n");
     for (i = 0; i < 26; i++) {
         if (biblioteca[i] != NULL) {
             printf("\nLetra %c:\n", 'A' + i);
-            mostrarAutores(biblioteca[i]);
+            mostrarProps(biblioteca[i], "autor");
         }
     }
 }
 
+// Procedimiento para mostrar estadísticas
+void mostrarEstadisticas(TListaP biblioteca[26], TListaP socios) {
+    int totalLibros, totalAutores, totalSocios, librosPrestados;
+    int i;
+    TListaP actual;
+    Sublista actualL;
+
+    totalLibros = 0;
+    totalAutores = 0;
+    totalSocios = 0;
+    librosPrestados = 0;
+
+    // Contar libros y autores en biblioteca
+    for (i = 0; i < 26; i++) {
+        actual = biblioteca[i];
+        while (actual != NULL) {
+            totalAutores++;
+            actualL = actual->sub;
+            while (actualL != NULL) {
+                totalLibros++;
+                actualL = actualL->sig;
+            }
+            actual = actual->sig;
+        }
+    }
+
+    // Contar socios y libros prestados
+    actual = socios;
+    while (actual != NULL) {
+        totalSocios++;
+        actualL = actual->sub;
+        while (actualL != NULL) {
+            librosPrestados++;
+            actualL = actualL->sig;
+        }
+        actual = actual->sig;
+    }
+
+    printf("\n=== ESTADISTICAS ===\n");
+    printf("Total de autores: %d\n", totalAutores);
+    printf("Total de libros disponibles: %d\n", totalLibros);
+    printf("Total de socios: %d\n", totalSocios);
+    printf("Total de libros prestados: %d\n", librosPrestados);
+}
+
+//FUNCIONES PROPIAS DEL EJERCICIO Y NO DE LA LECTURA
+
+void agregaLibro(TListaP array[], char autor[], char titulo[], int anio);
+
+void buscaLib(TListaP prop, Sublista * libro, char titulo[]);
+
+void prestamo(TListaP array[],TListaP *socios, char autor[], char socio[], char titulo[]);
+
+void buscaProp(TListaP L,char autor[], TListaP *p);
+
+void creaProp(TListaP *L, char autor[], TListaP *p);
+
+void insertaOrdL(TListaP prop, char autor[], char titulo[], int anio);
+
+void devolucion(TListaP socios, char socio[], char titulo[], TListaP array[]);
+
+void Elimina(TListaP L, char titulo[]);
+
 int main() {
 
-    //=== Codigo para crear las Listas ===
+    // === CODIGO PARA CREAR LISTAS (IA)
 
-    // Declarar variables
-    TListaAutores biblioteca[26];
-    TListaSocios socios;
+    // Variables principales
+    TListaP array[TOTAL_LETRAS];
+    TListaP socios;
 
-    // Inicializar estructuras
-    inicializarBiblioteca(biblioteca);
+    // Inicialización
+    inicializarBiblioteca(array);
     socios = NULL;
 
+    printf("=== SISTEMA DE BIBLIOTECA ===\n");
+    printf("Cargando datos de prueba...\n\n");
+
     // Cargar datos de prueba
-    printf("=== CREANDO DATOS DE PRUEBA ===\n\n");
-    cargarDatosPrueba(biblioteca, &socios);
+    cargarDatosPrueba(array, &socios);
 
-    // Mostrar resultados
-    mostrarBiblioteca(biblioteca);
+    // Mostrar biblioteca
+    mostrarBiblioteca(array);
 
+    // Mostrar socios
     printf("\n=== LISTA DE SOCIOS ===\n");
-    mostrarSocios(socios);
+    mostrarProps(socios, "socio");
 
-    printf("=== ESTRUCTURA CREADA EXITOSAMENTE ===\n");
-    printf("Ahora puedes implementar las funciones de:\n");
-    printf("- Agregar libros\n");
-    printf("- Registrar préstamos\n");
-    printf("- Procesar devoluciones\n");
+    // Mostrar estadísticas
+    mostrarEstadisticas(array, socios);
 
-    //=== FIN Codigo para crear las Listas ===
+    // === CODIGO EJERCICIO (En realida se pedia mover, y lo que hago es duplicar y luego eliminar lo cual no esta bien
+
+    char autor[TOP_NOMBRE], titulo[TOP_NOMBRE],socio[TOP_NOMBRE];
+    int anio;
+    //cargaAutores(&array); cargaSocios(&socios);
+
+    printf("Ingrese autor,titulo y año del libro a insertar\n");
+    scanf(" %s%s%d",autor,titulo,&anio);
+    agregaLibro(array,autor,titulo,anio);
+    printf("Ingrese autor,socio y titulo para pedir un prestamo\n");
+    scanf(" %s%s%s",autor,socio,titulo);
+    prestamo(array,&socios,autor,socio,titulo);
+    printf("Ingrese socio y titulo para devolver\n");
+    scanf(" %s%s",socio,titulo);
+    devolucion(socios,socio,titulo,array);
 
 
+    // PROBANDO CODIGO
+    /*
+    printf("\n=== PRUEBA: AGREGAR LIBRO ===\n");
+    strcpy(autor, "Asimov, Isaac");
+    strcpy(titulo, "Robots e Imperio");
+    anio = 1985;
+    printf("Agregando libro: %s de %s (%d)\n", titulo, autor, anio);
+    agregaLibro(array, autor, titulo, anio);
+
+    // Ejemplo de préstamo
+    printf("\n=== PRUEBA: REGISTRAR PRESTAMO ===\n");
+    strcpy(autor, "Asimov, Isaac");
+    strcpy(socio, "Martinez, Juan Carlos");
+    strcpy(titulo, "Fundacion");
+    printf("Prestando %s de %s a %s\n", titulo, autor, socio);
+    prestamo(array, &socios, autor, socio, titulo);
+
+    // Ejemplo de devolución
+    printf("\n=== PRUEBA: DEVOLUCION ===\n");
+    strcpy(socio, "Martinez, Juan Carlos");
+    strcpy(titulo, "Fundacion");
+    printf("Devolviendo %s de %s\n", titulo, socio);
+    devolucion(socios, socio, titulo, array);
+
+    printf("\n=== FIN DE PRUEBAS ===\n");
+    */
 
     return 0;
+}
+
+void agregaLibro(TListaP array[], char autor[], char titulo[], int anio) {
+
+    TListaP L = array[toupper(autor[0])-'A'], p;
+
+    buscaProp(L,autor,&p);
+
+    if(p == NULL)
+        creaProp(&L,autor,&p);
+
+    insertaOrdL(p,autor,titulo,anio);
+}
+
+void prestamo(TListaP array[],TListaP *socios, char autor[], char socio[], char titulo[]) {
+
+    TListaP L = array[toupper(autor[0]) - 'A'], p, pSocio;
+    Sublista plib;
+
+    buscaProp(L,autor,&p);
+    buscaLib(p,&plib,titulo);
+    buscaProp(*socios,socio,&pSocio);
+    if(pSocio == NULL)
+        creaProp(socios,socio,&pSocio);
+
+    insertaOrdL(pSocio,plib->autor,plib->titulo,plib->anio);
+    Elimina(p,titulo);
+}
+
+void buscaProp(TListaP L,char autor[], TListaP *p) {
+
+    TListaP act = L;
+    while(act != NULL && strcmp(autor,act->nombre) > 0)
+        act = act->sig;
+    if(act != NULL && strcmp(autor,act->nombre) == 0)
+        *p = act;
+    else
+        *p = NULL;
+}
+//TListaP L = array
+void creaProp(TListaP *L, char autor[], TListaP *p) {
+    TListaP aux,ant,act;
+    aux = (TListaP) malloc(sizeof(prop));
+    strcpy(aux->nombre, autor);
+    aux->sub = NULL; //Cuando creo un nuevo nodo, su subLista tiene que apuntar a NULL, tener en cuenta
+
+    if(*L == NULL || strcmp(autor,(*L)->nombre) < 0) {
+        aux->sig = *L;
+        *L = *p = aux;
+    }
+    else {
+        act = *L;
+        while(act != NULL && strcmp(autor,act->nombre) > 0 ) {
+            ant = act;
+            act = act->sig;
+        }
+        ant->sig = aux;
+        aux->sig = act;
+        *p = aux; //tener cuidado con las asignacios multiples, son peligrosas, aqui no se puede hacer hasta que aux tenga su
+    }                   //estructura final establecida, ademas son menos claras que las comunes.
+}
+
+void insertaOrdL(TListaP L, char autor[], char titulo[], int anio) {
+
+    Sublista act,ant;
+    Sublista aux = (Sublista) malloc(sizeof(Libro));
+    strcpy(aux->titulo,titulo);
+    strcpy(aux->autor,autor);
+    aux->anio = anio;
+    act = L->sub;
+
+    if(act == NULL || strcmp(titulo,act->titulo) < 0) {
+        aux->sig = act;
+        L->sub = aux;
+    }
+    else {
+        while(act != NULL && strcmp(titulo,act->titulo) > 0){
+            ant = act;
+            act = act->sig;
+        }
+        ant->sig = aux;
+        aux->sig = act;
+    }
+}
+
+void devolucion(TListaP socios, char socio[], char titulo[], TListaP array[]) {
+
+    TListaP p, paut, L;
+    Sublista pLib;
+    buscaProp(socios,socio,&p);
+    buscaLib(p,&pLib,titulo);
+    L = array[toupper(pLib->autor[0])-'A'];
+    buscaProp(L,pLib->autor,&paut);
+    insertaOrdL(paut,pLib->autor,titulo,pLib->anio);
+    Elimina(p,titulo);
+}
+
+void buscaLib(TListaP L, Sublista * libro, char titulo[]) {
+    Sublista act;
+    act = L->sub;
+    while(act != NULL && strcmp(titulo,act->titulo) > 0)
+        act = act->sig;
+    *libro = act;
+}
+
+void Elimina(TListaP L, char titulo[]) {
+    Sublista act,ant;
+    ant = NULL;
+    if(strcmp(L->sub->titulo, titulo) == 0) {
+        act = L->sub;
+        L->sub = act->sig;
+        free(act);
+    }
+    else {
+        act = L->sub;
+        while(act != NULL && strcmp(titulo,act->titulo) > 0) {
+            ant = act;
+            act = act->sig;
+        }
+        ant->sig = act->sig;
+        free(act);
+    }
 }
