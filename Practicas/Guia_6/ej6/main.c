@@ -172,9 +172,8 @@ void Listado(TLista L, char k) {
                 actS=actS->sig;
         }
         cont += contMax;
-        contMax = cont;
-        if(cont > max) {
-            max = cont;
+        if(contMax > max) {
+            max = contMax;
             strcpy(clubMax,aux->nomClub);
         }
         aux = aux->sig;
