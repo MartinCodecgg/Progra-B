@@ -65,8 +65,8 @@ void empresaQueCert(TListaN L, int n) {
 
 void generaM(char M[][COL], TListaN L) {
     TListaN actN;
-    SubListaE actE; //Quizas convenia inicializar toda la matriz con N y luego reemplazar por S, el codigo quedaria mas claro
-    int i = 0, j;
+    SubListaE actE; //Convenia inicializar toda la matriz con N y luego reemplazar por S, el codigo quedaria mas claro, y mas eficiente
+    int i = 0, j;       //para reemplazar por S solo recorro las sublitas y voy rellenando la fila con el numero empresa
     if(L != NULL) {
         actN = L;
         while(actN != NULL && i < FILA){
@@ -142,31 +142,28 @@ void Elimina(TListaN *L, TCola *C, int E){
 }
 
 void generaL(TListaN *L){
-
+    TListaN antN,aux;
+    int norma,cantE,i,numE;
+    SubListaE auxE, antE, actE;
+    char nombreN[STR8], fecha[STR8], rec;
     FILE * arch = fopen("CARGACTUAL.txt","rt");
+
     if(arch == NULL)
         printf("Error al abrir el archivo\n");
     else {
-        TListaN antN,aux;
-        int norma,cantE,i,numE;
-        SubListaE auxE, antE, actE;
-        char nombreN[STR8], fecha[STR8], rec;
-
         while(fscanf(arch,"%d%s%d",&norma,nombreN,&cantE) == 3) {
             aux = (TListaN) malloc(sizeof(Norma));
             aux->norma = norma;
             strcpy(aux->nombre, nombreN);
             aux->cantE = cantE; aux->sub = NULL;
             //antN = NULL; //Si voy a hacer este algoritmo de la lectura ordenada no debo inicializar a antN en cada iteracion
-            if(*L == NULL) { //cabecera
-                aux->sig =  NULL;
+            if(*L == NULL)//cabecera
                 *L = antN = aux;
-            }
             else {
                 antN->sig = aux; //La lectuta cambia al estar ordenado el archivo
-                aux->sig = NULL;
                 antN = aux;
             }
+            aux->sig = NULL;
             for(i=0; i<cantE; i++) {
                 fscanf(arch,"%d%s %c",&numE,fecha,&rec);
                 auxE = (SubListaE) malloc(sizeof(Empresa));
