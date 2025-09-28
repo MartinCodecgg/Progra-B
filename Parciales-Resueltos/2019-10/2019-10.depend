@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1759028555 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2019-10\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.h"
+	"C:\Users\defin\Documents\Archivos Github\Progra-B\Practicas\Guia_5\IMPL_COLAESTATICACIRCULAR\colas.c"
+
+1758828014 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.h
+	"../TDA_TELEMENTO/Telemento.h"
+
+1758827903 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\tda_telemento\telemento.h
+
+1758332214 c:\users\defin\documents\archivos github\progra-b\practicas\guia_5\impl_colaestaticacircular\colas.c
+	"colas.h"
+	<stdio.h>
+	<stdlib.h>
+
