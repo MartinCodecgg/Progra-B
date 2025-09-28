@@ -48,32 +48,34 @@ void creaLD(TListaD *LD, char array[], int n) {
 }
 
 int validaPalindroma(TListaD LD){ //RECORDAR que si LD es por copia no usar la flecha
-    Pnodo pri,ult,antPri;
+    Pnodo pri,ult;
 
     if(LD.pri == NULL || LD.pri->sig == NULL) //unico caracter o lista vacia
         return 1;
     else{
         pri = LD.pri;
         ult = LD.ult;
-        while (pri->dato == ult->dato && ult != pri && antPri != ult){
-            antPri = pri;
-            pri = pri->sig;
-            ult = ult->ant;
+        while (ult != pri && pri->dato == ult->dato && pri->ant != ult){
+            pri = pri->sig; //Conviene preguntar primero por ult != pri ya que asi nos evitamos las demas-
+            ult = ult->ant;     //en caso de coincidir
         }
-        return (ult == pri || antPri == ult); //Al mismo tiempo que se valida que los datos sean iguales:
+        return (pri == ult || pri->ant == ult); //Al mismo tiempo que se valida que los datos sean iguales:
     }//Si tienen la misma direccion de memoria es porque es palindroma, estan parados en la mitad de la palabra
-}   //De otro modo si la direccion del anterior de pri es igual a ult significa que se superaron y es palindroma por esto
+}   //De otro modo si el anterior de pri es igual a ult significa que se superaron y es palindroma por esto
 
 int main(){
     TListaD LD;
-    char array[] = {'r','a','d','a','r'};
-    int n = 5;
+    //char array[] = {'w','a','d','a','r'};
+    //int n = 5;
+    char array[] = {'h','a','n','n','a','h'};
+    int n = 6;
     creaLD(&LD,array,n);
     if(validaPalindroma(LD))
-        printf("Es Palindroma");
+        printf("Es Palindroma\n");
     else
-        printf("No es Palindroma");
+        printf("No es Palindroma\n");
 
+    validaPalindroma(LD) ? printf("Es Palindroma\n") : printf("No es Palindroma\n");
 
     return 0;
 }
