@@ -69,9 +69,9 @@ void generaM(char M[][COL], TListaN L) {
     int i = 0, j;
     if(L != NULL) {
         actN = L;
-        while(actN != NULL && i < 20){
+        while(actN != NULL && i < FILA){
             actE = actN->sub;
-            for(j=0; j<50; j++) {
+            for(j=0; j<COL; j++) {
                 if(actE != NULL && actE->numE == j) {
                     M[i][j] = 'S';
                     actE = actE->sig;
@@ -82,11 +82,9 @@ void generaM(char M[][COL], TListaN L) {
             actN = actN->sig;
             i++;
         }
-        while(i < 20) {
-            for(j=0; j<50; j++)
+        for(i; i < FILA; i++) //terminar con for desde i hasta 19
+            for(j=0; j<COL; j++) //usar COL y no 50, no usar valores hardcodeados
                 M[i][j] = 'N';
-            i++;
-        }
     }
 }
 
