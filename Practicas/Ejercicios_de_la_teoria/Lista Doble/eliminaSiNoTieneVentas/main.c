@@ -13,45 +13,6 @@ typedef struct nodoD * Pnodo;
 typedef struct{
     Pnodo pri,ult;} TListaD;
 
-void elimina(TListaD *LD){
-    Pnodo act, elim;
-    if(LD->pri != NULL) { //como LD es un puntero puedo usar -> flechita directamente
-        if(LD->pri->cantDias == 0 && LD->pri != NULL && LD->pri == LD->ult) { //unico elemento
-            LD->pri = NULL;
-            LD->ult = NULL;
-            free(LD->pri);
-        }
-        else {}
-        if(LD->pri != NULL && LD->pri->cantDias == 0 || LD->ult->cantDias == 0){
-            if(LD->pri->cantDias == 0) {
-                elim = LD->pri;
-                LD->pri->sig->ant = NULL;
-                LD->pri = LD->pri->sig;
-                free(elim);
-            }
-            if (LD->pri != NULL && LD->ult->cantDias == 0) {
-                elim = LD->ult;
-                LD->ult->ant->sig = NULL;
-                LD->ult = LD->ult->ant;
-                free(elim);
-            }
-        }
-        printf("asa");
-        act = LD->pri;
-        while(act != NULL){
-            if(act->cantDias == 0) {
-                elim = act;
-                act->ant->sig = act->sig;
-                act->sig->ant = act->ant;
-                act = act->sig;
-                free(elim);
-            }
-            else
-                act = act->sig;
-        }
-    }
-}
-
 void elimina2(TListaD *LD) {
     Pnodo act, elim;
 
@@ -59,7 +20,7 @@ void elimina2(TListaD *LD) {
         act = LD->pri;
         while(act != NULL) {
             if(act->cantDias == 0) {
-                if(act == act->sig) {
+                if(act->sig == NULL && act->ant == NULL) {
                     LD->pri = NULL;
                     LD->ult = NULL;
                     free(act);
@@ -129,7 +90,7 @@ void mostrarLista(TListaD *LD) {
 }
 
 int main(){
-    TListaD lista = {NULL, NULL};
+    TListaD lista = {NULL, NULL}; //Una forma de inicializar menos clara pero valida y mas corta
 
     printf("=== PRUEBA 1: Lista con varios nodos con cantDias = 0 ===\n");
     insertarFinal(&lista, "A001", 0, 100.5);
@@ -141,9 +102,7 @@ int main(){
 
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
-
     elimina2(&lista);
-
     printf("Después de eliminar (cantDias = 0):\n");
     mostrarLista(&lista);
 
@@ -154,7 +113,6 @@ int main(){
 
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
-
     elimina2(&lista);
 
     printf("Después de eliminar (debería estar vacía):\n");
@@ -165,8 +123,11 @@ int main(){
     insertarFinal(&lista, "C002", 5, 200.0);
     insertarFinal(&lista, "C003", 8, 300.0);
     insertarFinal(&lista, "C004", 0, 400.0);
+
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
+
+    // === CODIGO EJERCICIO ===
 
     elimina2(&lista);
 
