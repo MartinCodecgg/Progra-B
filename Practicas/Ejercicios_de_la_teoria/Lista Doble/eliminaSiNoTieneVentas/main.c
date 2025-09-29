@@ -21,9 +21,11 @@ void elimina2(TListaD *LD) {
         while(act != NULL) {
             if(act->cantDias == 0) {
                 if(act->sig == NULL && act->ant == NULL) {
+                    elim = act;
                     LD->pri = NULL;
                     LD->ult = NULL;
-                    free(act);
+                    act = NULL;
+                    free(elim);
                 }
                 else {
                     if(act == LD->pri) {
@@ -89,8 +91,19 @@ void mostrarLista(TListaD *LD) {
     printf("\n");
 }
 
+// Función para liberar toda la lista
+void liberarLista(TListaD *LD) {
+    Pnodo act = LD->pri, siguiente;
+    while(act != NULL) {
+        siguiente = act->sig;
+        free(act);
+        act = siguiente;
+    }
+    LD->pri = LD->ult = NULL;
+}
+
 int main(){
-    TListaD lista = {NULL, NULL}; //Una forma de inicializar menos clara pero valida y mas corta
+    TListaD lista = {NULL, NULL};
 
     printf("=== PRUEBA 1: Lista con varios nodos con cantDias = 0 ===\n");
     insertarFinal(&lista, "A001", 0, 100.5);
@@ -102,9 +115,13 @@ int main(){
 
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
+
     elimina2(&lista);
+
     printf("Después de eliminar (cantDias = 0):\n");
     mostrarLista(&lista);
+
+    liberarLista(&lista);
 
     printf("\n=== PRUEBA 2: Todos los nodos tienen cantDias = 0 ===\n");
     insertarFinal(&lista, "B001", 0, 100.0);
@@ -113,10 +130,13 @@ int main(){
 
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
+
     elimina2(&lista);
 
     printf("Después de eliminar (debería estar vacía):\n");
     mostrarLista(&lista);
+
+    liberarLista(&lista);
 
     printf("\n=== PRUEBA 3: Solo primer y último nodo tienen cantDias = 0 ===\n");
     insertarFinal(&lista, "C001", 0, 100.0);
@@ -127,12 +147,19 @@ int main(){
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
 
-    // === CODIGO EJERCICIO ===
-
     elimina2(&lista);
 
     printf("Después de eliminar:\n");
     mostrarLista(&lista);
 
+    liberarLista(&lista);
+
+    // === CODIGO EJERCICIO ===
+
+    /*
+    elimina2(&lista);
+    printf("Después de eliminar:\n");
+    mostrarLista(&lista);
+    */
     return 0;
 }

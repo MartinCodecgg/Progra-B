@@ -69,7 +69,7 @@ void mostrarListaPalabras(TListaC LC) {
     } while (actual != LC->sig);
 }
 
-void elimina(TListaC *LC,char pal[]) {
+void elimina(TListaC *LC,char pal[]) { //[PREGUNTAR POR EFICIENCIA]
     TListaC act, ant;
 
     ant = NULL;
@@ -81,11 +81,12 @@ void elimina(TListaC *LC,char pal[]) {
         }
         if(strcmp(pal,act->palabra) == 0)
             --act->cant;
-        if(act->cant == 0) {
-            if(ant == NULL && act == act->sig) //caso del unico elemento en la lista
+        if(act->cant == 0) { //ant == NULL && <- Esta condicion es innecesaria aqui, ya que se cumple tanto para el caso del primer elemento y el unico, debo poner condiciones unicas en cada if, y las condiciones en comun ir tirandolas hacia abajo como es el caso actual
+            if(act == act->sig) //caso del unico elemento en la lista
                 *LC = NULL;
-            else if(ant == NULL) //primer elemento
-                (*LC)->sig = act->sig;
+            else // no poner else if() , poner el else y el if debajo
+                if(ant == NULL) //primer elemento
+                    (*LC)->sig = act->sig;
             else {  //otro
                 ant->sig = act->sig;
                 if(act == *LC) //cabecera
@@ -95,8 +96,8 @@ void elimina(TListaC *LC,char pal[]) {
         }
     }
 }
-
-void elimina(TListaC *LC, char pal[]) {
+/*
+void elimina(TListaC *LC, char pal[]) { //hecho por chat (ignorar)
     TListaC act, ant;
 
     if (*LC == NULL) {
@@ -106,7 +107,7 @@ void elimina(TListaC *LC, char pal[]) {
             ant = act;
             act = act->sig;
         }
-        if (strcmp(pal, act->palabra) == 0 && --act->cant == 0) {
+        if (strcmp(pal, act->palabra) == 0 && --act->cant == 0) { //PREGUNTAR por esto: --act->cant == 0
             if (act == act->sig)           // Único elemento
                 *LC = NULL;
             else if (ant == NULL)          // Primer elemento
@@ -119,7 +120,7 @@ void elimina(TListaC *LC, char pal[]) {
         }
     }
 }
-
+*/
 int main() {
     TListaC LC;
     char pal[TOP];

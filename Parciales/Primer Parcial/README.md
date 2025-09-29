@@ -1,1 +1,5 @@
 ## 👉Empiecen por el 2019-10 y luego hagan los *parciales* del 2023-10 en adelante y no sean giles
+
+1) 2019-10
+2) recu 2013-6
+3)...

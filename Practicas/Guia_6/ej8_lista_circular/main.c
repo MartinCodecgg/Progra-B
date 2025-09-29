@@ -36,22 +36,6 @@ TListaC crearListaCargada() {
     return LC;
 }
 
-// Función simple para mostrar la lista (IA)
-void mostrarLista(TListaC LC) {
-    if (LC == NULL) {
-        printf("Lista vacía\n");
-        return;
-    }
-
-    nodo *actual = LC;
-    printf("Lista circular: ");
-    do {
-        printf("%c ", actual->dato);
-        actual = actual->sig;
-    } while (actual != LC);
-    printf("\n");
-}
-
 void muestraLC(TListaC LC) {
     TListaC act;
 
@@ -75,21 +59,67 @@ int contVocales(TListaC LC) {
         while(act != LC) {
             act = act->sig;
             aux = toupper(act->dato);
-            if(aux == 'A' || aux == 'E' || aux == 'iI' || aux == 'o' || aux == 'u')
+            if(aux == 'A' || aux == 'E' || aux == 'i' || aux == 'o' || aux == 'u')
             cont++;
         }
     }
     return cont;
 }
 
+int estaOrd(TListaC LC) {
+    TListaC act, ant;
+
+    if(LC != NULL) {
+        ant = LC->sig;
+        act = LC->sig->sig;
+        while(act != LC && act->dato > ant->dato) {
+            ant = act;
+            act = act->sig;
+        }
+        return (act == LC && act->dato > ant->dato);
+    }
+    else
+        return 1;
+}
+
+void elimina(TListaC *LC, int p) {
+    TListaC act, ant;
+    int aux;
+
+    if(*LC != NULL) {
+        ant = *LC;
+        act = (*LC)->sig;
+        aux = 0;
+        while(aux != p) {
+            ant = act;
+            act = act->sig;
+            aux++;
+        }
+        if(aux == p) {
+            if(act == act->sig) { //unico elemento
+                *LC = NULL;
+                free(LC);
+            }
+            else { //dado que se que para todos los casos voy a eliminar la misma variable puedos sacar factor comun
+                if(act == *LC) {
+                    ant->sig = act->sig;
+                    *LC = ant;
+                }
+                else
+                    ant->sig = act->sig;
+                free(act);
+            }
+        }
+    }
+}
+
 int main() {
     TListaC LC;
-    int vocales;
 
     // Crear la lista ya cargada con datos
     LC = crearListaCargada();
     printf("Lista circular creada y cargada (LC apunta al mayor 'E'):\n");
-    mostrarLista(LC);
+    muestraLC(LC);
     printf("\nUsando tu función muestraLC:\n");
     // Aquí puedes probar tu función muestraLC(LC);
     printf("\nDemostrando estructura: LC='%c' apunta al mayor, LC->sig='%c' es el primero\n",
@@ -98,8 +128,13 @@ int main() {
     // === CODIGO EJERCICIO ===
 
     muestraLC(LC);
-    vocales = contVocales(LC);
-    printf("La cantidad de nodos que contienen vocales es de: %d\n",vocales);
+    printf("La cantidad de nodos que contienen vocales es de: %d\n",contVocales(LC));
+    if(estaOrd(LC))
+        printf("Esta ordenada\n");
+    else
+        printf("No esta ordenada\n");
+    elimina(&LC,4);
+    muestraLC(LC);
 
     return 0;
 }
