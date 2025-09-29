@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1759117237 source:c:\users\defin\documents\archivos github\progra-b\practicas\ejercicios_de_la_teoria\lista_circular\ej2_b\ej2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

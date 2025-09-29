@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1759150204 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_6\ej8_lista_circular\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
