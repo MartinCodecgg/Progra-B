@@ -57,10 +57,10 @@ int contVocales(TListaC LC) {
     if(LC != NULL) {
         act = LC->sig;
         while(act != LC) {
-            act = act->sig;
             aux = toupper(act->dato);
             if(aux == 'A' || aux == 'E' || aux == 'i' || aux == 'o' || aux == 'u')
-            cont++;
+                cont++;
+            act = act->sig;
         }
     }
     return cont;

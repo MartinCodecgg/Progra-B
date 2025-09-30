@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1759204380 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\recu_2023_6\colas.c
+	"colas.h"
+	<stdio.h>
+	<stdlib.h>
+
+1759205997 c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\recu_2023_6\colas.h
+
