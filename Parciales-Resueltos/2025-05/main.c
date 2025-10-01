@@ -34,7 +34,7 @@ typedef nodoD * PnodoD;
 typedef struct {
     PnodoD pri,ult;} TListaD;
 
-// == FUNCIONES DE CARGA DE DATOS DE PRUEBA ==
+// ============= FUNCIONES DE CARGA DE DATOS DE PRUEBA (INTELIGENCIA ARTIFICIAL) =============
 
 void cargaLS(TLista *LS) {
     // Inicializar la lista vacía
@@ -48,19 +48,19 @@ void cargaLS(TLista *LS) {
     strcpy(prod1->cod, "A001");
     prod1->precio = 150.75;
     prod1->stock = 50.0;
-    prod1->margen = 1.5;
+    prod1->margen = 0.5;
     prod1->sub = NULL;
 
     // Agregar compras a la sublista de A001
     SubLista sub1 = (SubLista)malloc(sizeof(nodito));
-    strcpy(sub1->fecha, "15/01/2025");
+    strcpy(sub1->fecha, "2025/01/15");
     sub1->cant = 30.0;
     sub1->precio = 100.50;
     sub1->sig = NULL;
     prod1->sub = sub1;
 
     SubLista sub2 = (SubLista)malloc(sizeof(nodito));
-    strcpy(sub2->fecha, "10/01/2025");
+    strcpy(sub2->fecha, "2025/01/10");
     sub2->cant = 20.0;
     sub2->precio = 95.00;
     sub2->sig = prod1->sub;
@@ -71,11 +71,11 @@ void cargaLS(TLista *LS) {
     strcpy(prod2->cod, "B123");
     prod2->precio = 225.00;
     prod2->stock = -10.0;  // Stock negativo para prueba
-    prod2->margen = 1.5;
+    prod2->margen = 0.5;
     prod2->sub = NULL;
 
     SubLista sub3 = (SubLista)malloc(sizeof(nodito));
-    strcpy(sub3->fecha, "20/01/2025");
+    strcpy(sub3->fecha, "2025/01/20");
     sub3->cant = 15.0;
     sub3->precio = 150.00;
     sub3->sig = NULL;
@@ -86,11 +86,11 @@ void cargaLS(TLista *LS) {
     strcpy(prod3->cod, "C456");
     prod3->precio = 89.99;
     prod3->stock = 100.0;
-    prod3->margen = 1.5;
+    prod3->margen = 0.5;
     prod3->sub = NULL;
 
     SubLista sub4 = (SubLista)malloc(sizeof(nodito));
-    strcpy(sub4->fecha, "18/01/2025");
+    strcpy(sub4->fecha, "2025/01/18");
     sub4->cant = 100.0;
     sub4->precio = 59.99;
     sub4->sig = NULL;
@@ -101,7 +101,7 @@ void cargaLS(TLista *LS) {
     strcpy(prod4->cod, "D789");
     prod4->precio = 450.00;
     prod4->stock = -5.0;  // Stock negativo
-    prod4->margen = 1.5;
+    prod4->margen = 0.5;
     prod4->sub = NULL;
 
     // Producto 5: E999
@@ -109,7 +109,7 @@ void cargaLS(TLista *LS) {
     strcpy(prod5->cod, "E999");
     prod5->precio = 75.50;
     prod5->stock = 200.0;
-    prod5->margen = 1.5;
+    prod5->margen = 0.5;
     prod5->sub = NULL;
 
     // Enlazar la lista simple ordenada
@@ -181,7 +181,7 @@ void cargaC(TCola *C) {
     poneC(C, elem);
 }
 
-// == FUNCIONES DE VISUALIZACIÓN ==
+// ============= FUNCIONES DE VISUALIZACIÓN (INTELIGENCIA ARTIFICIAL) =============
 
 void mostrarSublista(SubLista sub) {
     SubLista actual = sub;
@@ -263,7 +263,7 @@ void mostrarC(TCola C) {
     printf("=========================================\n");
 }
 
-// == PROGRAMA DE PRUEBA ==
+// ============= PROGRAMA DE PRUEBA (INTELIGENCIA ARTIFICIAL)=============
 
 void crearArchivoPrueba() {
     FILE *arch = fopen("PROVEEN.txt", "wt");
@@ -273,14 +273,14 @@ void crearArchivoPrueba() {
         return;
     }
 
-    // Formato: fecha codigo cantidad precio
-    // Fechas válidas: mes 25, año 4 (formato: DD/MM/YYYY -> posiciones [2-3] = 25, [6] = 4)
-    fprintf(arch, "10/25/2004 A001 25.00 105.00\n");
-    fprintf(arch, "15/25/2004 B123 30.00 155.00\n");  // B123 tiene stock negativo, debería eliminarse de LD
-    fprintf(arch, "20/25/2004 C456 50.00 62.00\n");
-    fprintf(arch, "05/25/2004 F888 40.00 85.50\n");   // Producto nuevo
-    fprintf(arch, "12/01/2025 A001 15.00 100.00\n");  // Fecha no válida (mes != 25)
-    fprintf(arch, "18/25/2003 E999 10.00 50.00\n");   // Fecha no válida (año != 4)
+    // Formato: fecha(AAAA/MM/DD) codigo cantidad precio
+    // Fechas válidas: mes 04 (abril), año 2025
+    fprintf(arch, "2025/04/10 A001 25.00 105.00\n");
+    fprintf(arch, "2025/04/15 B123 30.00 155.00\n");  // B123 tiene stock negativo, debería eliminarse de LD
+    fprintf(arch, "2025/04/20 C456 50.00 62.00\n");
+    fprintf(arch, "2025/04/05 F888 40.00 85.50\n");   // Producto nuevo
+    fprintf(arch, "2025/01/12 A001 15.00 100.00\n");  // Fecha no válida (mes != 04)
+    fprintf(arch, "2024/04/18 E999 10.00 50.00\n");   // Fecha no válida (año != 2025)
 
     fclose(arch);
     printf("\nArchivo PROVEEN.txt creado con datos de prueba.\n");
@@ -290,37 +290,43 @@ void crearArchivoPrueba() {
 
 void eliminaLD(TListaD *LD, char cod[]) {
     PnodoD actD, elim;
-    actD = LD->pri;
-    while(actD != NULL && strcmp(cod,actD->cod) != 0)
-        actD = actD->sig;
-
-    if(LD->pri->sig == NULL) {
-        LD->pri = LD->ult = NULL;
-        free(actD);
-    }
-    else {
-        if(actD == LD->pri) {
-            elim = actD;
-            LD->pri->sig->ant = NULL;
-            LD->pri = LD->pri->sig;
-        }
-        else {
-            if(actD == LD->ult) {
+    actD = LD->pri; //No pongo el if de que si es distinto de NULL porque en teoria llamo a la funcion siempre teniendo algo que eliminar
+    while(actD != NULL) {
+        if(strcmp(cod,actD->cod) == 0) {
+            if(LD->pri->sig == NULL) {
                 elim = actD;
-                LD->ult->ant = NULL;
-                LD->ult = LD->ult->ant;
+                actD = NULL; //le doy a elim, act y luego le asigno NULL para que despues al liberar quede apuntando a memoria basura y entre al while (porque sera != NULL) y provoque comportamiento indefinido
+                LD->pri = LD->ult = NULL;
+                free(elim);
             }
             else {
-                elim = actD;
-                actD->ant->sig = actD->sig;
-                actD->sig->ant = actD->ant;
+                if(actD == LD->pri) {
+                    elim = actD;
+                    LD->pri->sig->ant = NULL;
+                    LD->pri = LD->pri->sig;
+                }
+                else {
+                    if(actD == LD->ult) {
+                        elim = actD;
+                        LD->ult->ant->sig = NULL;
+                        LD->ult = LD->ult->ant;
+                    }
+                    else {
+                        elim = actD;
+                        actD->ant->sig = actD->sig;
+                        actD->sig->ant = actD->ant;
+                    }
+                }
+                actD = actD->sig;
+                free(elim);
             }
-            free(elim);
         }
+        else
+            actD = actD->sig;
     }
 }
 
-void insertaSublista(TLista *p, char fecha[], int cant, float precio) {
+void insertaSublista(TLista *p, char fecha[], float cant, float precio) {
     SubLista new;
     new = (SubLista) malloc(sizeof(nodito));
     strcpy(new->fecha,fecha);
@@ -339,11 +345,11 @@ void actualizaLS(TLista *LS, TListaD *LD, char cod[], float cant, float precio, 
         antL = actL;
         actL = actL->sig;
     }
-    if(actL != NULL) {
+    if(actL != NULL && strcmp(cod,actL->cod) == 0) {
         if(actL->stock < 0)
             tieneStockNegativo = 1;
         actL->stock += cant;
-        actL->precio = precio * actL->margen;
+        actL->precio = precio * (1 + actL->margen); //el margen se guarda como decimal, ej: 0.5
         insertaSublista(&actL,fecha,cant,precio);
         if(actL->stock > 0 && tieneStockNegativo)
             eliminaLD(LD,cod);
@@ -353,6 +359,7 @@ void actualizaLS(TLista *LS, TListaD *LD, char cod[], float cant, float precio, 
         strcpy(new->cod,cod);
         new->stock = cant;
         new->precio = precio * 1.5;
+        new->margen = 0.5;
         insertaSublista(&new,fecha,cant,precio);
         if(*LS == NULL || strcmp(cod,(*LS)->cod) < 0) {
             new->sig = *LS;
@@ -399,7 +406,7 @@ void procesaArch(TLista *LS, TListaD *LD) {
         printf("Ocurrio uun error al intentar abrir el archivo");
     else {
         while(fscanf(arch,"%s%s%f%f",fecha,cod,&cant,&precio) == 4)
-            if(fecha[2] == 2 && fecha[3] == 5 && fecha[6] == 4)
+            if(fecha[0] == '2' && fecha[1] == '0' && fecha[2] == '2' && fecha[3] == '5' && fecha[6] == '4')
                 actualizaLS(LS,LD,cod,cant,precio,fecha);
         fclose(arch);
     }
@@ -431,15 +438,12 @@ int main() {
 }
 */
 
+/* ===== MAIN PARA PROBAR CODIGO (INTELIGENCIA ARTIFICIAL)  ====== */
+
 int main() {
-
-    // === Variables ===
-
     TLista LS;
     TListaD LD;
     TCola C;
-
-    // === CODIGO IA para Probar ejercicio
 
     printf("========== PROGRAMA DE PRUEBA ==========\n");
     printf("Cargando datos de prueba...\n\n");
