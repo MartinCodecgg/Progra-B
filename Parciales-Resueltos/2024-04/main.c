@@ -115,7 +115,7 @@ void eliminaIncorrectos(TLista *L) {
     TLista act,ant,elim;
     unsigned int totCont = 0, contCancel = 0;
 
-    ant = NULL;
+    //ant = NULL; no inicializar el ant en NULL porque si
     act = *L;
     while(act != NULL) {
         totCont++;
@@ -127,7 +127,7 @@ void eliminaIncorrectos(TLista *L) {
             contCancel++;
             elim = act;
             if(act == *L)
-                (*L) = (*L)->sig;
+                (*L) = (*L)->sig; //valido para el unico ya que quedara apuntando a NULL si el sig es NULL
             else
                 ant->sig = act->sig;
             act =  act->sig;
