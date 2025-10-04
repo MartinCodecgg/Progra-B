@@ -16,16 +16,16 @@ typedef struct{
 void elimina2(TListaD *LD) {
     Pnodo act, elim;
 
-    if(LD->pri != NULL) {
+    if(LD->pri != NULL) { //innecesario, es inncesario ya que estoy preguntando lo mismo en el while
         act = LD->pri;
         while(act != NULL) {
             if(act->cantDias == 0) {
-                if(act->sig == NULL && act->ant == NULL) {
-                    elim = act;
+                if(act->sig == NULL && act->ant == NULL) { ///LD->pri == LD->ult
+                    //elim = act; //Se repite
                     LD->pri = NULL;
                     LD->ult = NULL;
-                    act = NULL;
-                    free(elim);
+                    //act = NULL; // SE REPITE
+                    //free(elim);  //SE REPITE
                 }
                 else {
                     if(act == LD->pri) {
@@ -53,6 +53,40 @@ void elimina2(TListaD *LD) {
         }
     }
 }
+
+void elimina3(TListaD *LD) {
+    Pnodo act, elim;
+        act = LD->pri;
+        while(act != NULL) {
+            if(act->cantDias == 0) {
+                elim = act;
+                if(LD->pri == LD->ult) {
+                    LD->pri = NULL;
+                    LD->ult = NULL;
+                }
+                else {
+                    if(act == LD->pri) {
+                        LD->pri->sig->ant = NULL;
+                        LD->pri = LD->pri->sig;
+                    }
+                    else
+                        if(act == LD->ult) {
+                            LD->ult->ant->sig = NULL;
+                            LD->ult = LD->ult->ant;
+                        }
+                    else {
+                        act->ant->sig = act->sig;
+                        act->sig->ant = act->ant;
+                    }
+                }
+                act = act->sig;
+                free(elim);
+            }
+            else
+                act = act->sig;
+        }
+}
+
 // Función auxiliar para crear un nodo
 Pnodo crearNodo(const char* cod, int cantDias, float totalVentas) {
     Pnodo nuevo = (Pnodo)malloc(sizeof(nodoD));
@@ -131,7 +165,7 @@ int main(){
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
 
-    elimina2(&lista);
+    elimina3(&lista);
 
     printf("Después de eliminar (debería estar vacía):\n");
     mostrarLista(&lista);
@@ -147,7 +181,7 @@ int main(){
     printf("Antes de eliminar:\n");
     mostrarLista(&lista);
 
-    elimina2(&lista);
+    elimina3(&lista);
 
     printf("Después de eliminar:\n");
     mostrarLista(&lista);

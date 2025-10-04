@@ -373,7 +373,7 @@ void agregaLibro(TListaP array[], char autor[], char titulo[], int anio) {
 
     TListaP L = array[toupper(autor[0])-'A'], p;
 
-    buscaProp(L,autor,&p);
+    buscaProp(L,autor,&p); //debio ser funcion que retorna puntero
 
     if(p == NULL)
         creaProp(&L,autor,&p);
@@ -398,7 +398,7 @@ void prestamo(TListaP array[],TListaP *socios, char autor[], char socio[], char 
 
 void buscaProp(TListaP L,char autor[], TListaP *p) {
 
-    TListaP act = L;
+    TListaP act = L; //quizas falta validar que la lista no sea nula
     while(act != NULL && strcmp(autor,act->nombre) > 0)
         act = act->sig;
     if(act != NULL && strcmp(autor,act->nombre) == 0)
@@ -430,7 +430,6 @@ void creaProp(TListaP *L, char autor[], TListaP *p) {
 }
 
 void insertaOrdL(TListaP L, char autor[], char titulo[], int anio) {
-
     Sublista act,ant;
     Sublista aux = (Sublista) malloc(sizeof(Libro));
     strcpy(aux->titulo,titulo);
@@ -464,7 +463,7 @@ void devolucion(TListaP socios, char socio[], char titulo[], TListaP array[]) {
     Elimina(p,titulo);
 }
 
-void buscaLib(TListaP L, Sublista * libro, char titulo[]) {
+void buscaLib(TListaP L, Sublista * libro, char titulo[]) { //debio ser funcion que retorna puntero
     Sublista act;
     act = L->sub;
     while(act != NULL && strcmp(titulo,act->titulo) > 0)

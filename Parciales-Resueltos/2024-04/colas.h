@@ -1,0 +1,26 @@
+#ifndef COLAS_H_INCLUDED
+#define COLAS_H_INCLUDED
+
+#define MAX 50
+#define ST7 8
+
+typedef struct {
+    char dom[ST7]; } TElementoC;
+
+typedef struct {
+TElementoC datos[MAX];
+ int pri, ult; } TCola;
+
+void IniciaC (TCola *C);
+
+int VaciaC(TCola C);
+
+void poneC (TCola *C, TElementoC X);
+
+void sacaC (TCola *C, TElementoC *X);
+
+TElementoC consultaC (TCola C);
+
+#endif // COLAS_H_INCLUDED
+
+

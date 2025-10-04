@@ -9,7 +9,7 @@
 	</File>
 	<File name="main.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="15413" topLine="41" />
+			<Cursor1 position="14464" topLine="15" />
 		</Cursor>
 		<Folding>
 			<Collapse line="9" />
@@ -23,10 +23,11 @@
 			<Collapse line="201" />
 			<Collapse line="232" />
 			<Collapse line="237" />
-			<Collapse line="300" />
-			<Collapse line="313" />
-			<Collapse line="367" />
-			<Collapse line="398" />
+			<Collapse line="302" />
+			<Collapse line="315" />
+			<Collapse line="369" />
+			<Collapse line="400" />
+			<Collapse line="448" />
 		</Folding>
 	</File>
 	<File name="colas.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">

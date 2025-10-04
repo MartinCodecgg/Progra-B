@@ -293,33 +293,29 @@ void eliminaLD(TListaD *LD, char cod[]) {
     actD = LD->pri; //No pongo el if de que si es distinto de NULL porque en teoria llamo a la funcion siempre teniendo algo que eliminar
     while(actD != NULL) {
         if(strcmp(cod,actD->cod) == 0) {
+            elim = actD;
             if(LD->pri->sig == NULL) {
-                elim = actD;
                 actD = NULL; //le doy a elim, act y luego le asigno NULL para que despues al liberar quede apuntando a memoria basura y entre al while (porque sera != NULL) y provoque comportamiento indefinido
                 LD->pri = LD->ult = NULL;
-                free(elim);
             }
             else {
                 if(actD == LD->pri) {
-                    elim = actD;
                     LD->pri->sig->ant = NULL;
                     LD->pri = LD->pri->sig;
                 }
                 else {
                     if(actD == LD->ult) {
-                        elim = actD;
                         LD->ult->ant->sig = NULL;
                         LD->ult = LD->ult->ant;
                     }
                     else {
-                        elim = actD;
                         actD->ant->sig = actD->sig;
                         actD->sig->ant = actD->ant;
                     }
                 }
-                actD = actD->sig;
-                free(elim);
             }
+            actD = actD->sig; //Recordar luego de terminar cada funcion con if o else anidados, revisar si no hay sentencias repetidas en todas las ramas, como es el caso actual
+            free(elim);
         }
         else
             actD = actD->sig;
@@ -338,14 +334,14 @@ void insertaSublista(TLista *p, char fecha[], float cant, float precio) {
 
 void actualizaLS(TLista *LS, TListaD *LD, char cod[], float cant, float precio, char fecha[]) {
     TLista actL, antL, new;
-    int tieneStockNegativo = 0;
+    unsigned short tieneStockNegativo = 0; //recordar siempre que defino int pensar que si tengo que ponerle unsigned o short
 
     actL = *LS;
     while(actL != NULL && strcmp(cod,actL->cod) > 0) {
         antL = actL;
         actL = actL->sig;
     }
-    if(actL != NULL && strcmp(cod,actL->cod) == 0) {
+    if(actL != NULL && strcmp(cod,actL->cod) == 0) { //si lo encuentro
         if(actL->stock < 0)
             tieneStockNegativo = 1;
         actL->stock += cant;
@@ -354,7 +350,7 @@ void actualizaLS(TLista *LS, TListaD *LD, char cod[], float cant, float precio, 
         if(actL->stock > 0 && tieneStockNegativo)
             eliminaLD(LD,cod);
     }
-    else {
+    else { //si no lo encuentro lo debo crear e insertar, moduralizar?
         new = (TLista) malloc(sizeof(nodo));
         strcpy(new->cod,cod);
         new->stock = cant;
@@ -379,8 +375,8 @@ void actualizaYbusca(TLista LS, TElementoC elem, float * precio, TListaD *LD) {
     while(strcmp(elem.cod,actL->cod) > 0) //elem es un struct y por ello elem.cod
         actL = actL->sig;
     actL->stock -= elem.cant;
-    *precio = actL->precio;
-    if(actL->stock < 0) {
+    *precio = actL->precio; //devuelve el precio
+    if(actL->stock < 0) { //Convenia moduralizar la creacion en la lista doble
         new = (PnodoD) malloc(sizeof(nodoD));
         strcpy(new->cod,elem.cod);
         new->stock = actL->stock;

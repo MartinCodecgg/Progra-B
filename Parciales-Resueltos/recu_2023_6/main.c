@@ -15,7 +15,7 @@ typedef nodoC * TListaC;
 
 typedef struct{
     int cantP;
-    char vip, radio[ST3];} TViaje;
+    char vip, radio[ST3];} TViaje; //Este struct no deberia ir, ya que la cola debe usar TElemento C y no puedo asignarle un TViaje aunque tenga los mismos campos
 
 typedef struct nodo{
     char patente[ST7];
@@ -298,6 +298,8 @@ void creaArchivoPrueba() { // IA
     printf("Archivo Viajes.dat creado con 10 viajes de prueba.\n\n");
 }
 
+// === FUNCIONES PROPIAS DEL PARCIAL ===
+
 void buscaPat(TListaL L, char pat[ST7], TListaL *p) {
     TListaL act;
     if(L != NULL) {
@@ -313,7 +315,7 @@ void buscaPat(TListaL L, char pat[ST7], TListaL *p) {
 
 void procesaArch(TListaC LC, TListaL *L){
     TListaC actC;
-    TElementoC reg;     //inicializar siempre estos puntos en NULL, porque la funcion de busqueda busca mientras L no sea NULL
+    TElementoC reg;     //inicializar siempre estos punteros en NULL (pL), porque la funcion de busqueda busca mientras L no sea NULL
     TListaL antL,actL,pL = NULL, new; //Mejor usar Pl y no pL, la catedra indica que es un puntero con la P mayuscula
     FILE * arch = fopen("Viajes.dat","rb");
     int OK; //variable que controla que no siga buscando si ya encontro un coche libre
@@ -426,7 +428,7 @@ void eliminaPat(TListaC *LC, TListaL *L, char pat[], TRvec vec[]) {
         vec[i].cantP = 0;
         vec[i].cantV = 0;
     }
-    //ELIMINAR DE LA LISTA SIMPLE
+    //ELIMINAR DE LA LISTA SIMPLE    (*cont)++;
     actL = *L;
     while(strcmp(pat,actL->patente) != 0) {
         antL = actL;
@@ -438,7 +440,7 @@ void eliminaPat(TListaC *LC, TListaL *L, char pat[], TRvec vec[]) {
         vec[strlen(reg.radio) -1].cantV++;
     }
     if(actL == *L)
-        *L = (*L)->sig; //valido para el primero y el unico, porque es el primero le asigno NULL
+        *L = (*L)->sig; //valido para el primero y el unico, porque si es el primero le asigno L siendo NULL (su siguiente es NULL)
     else
         antL->sig = actL->sig;
     free(actL);

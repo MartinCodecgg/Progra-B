@@ -9,7 +9,6 @@
 #define COL 50
 
 typedef struct Empresa {
-
     int numE;
     char fecha[STR8];
     char rec;
@@ -18,7 +17,6 @@ typedef struct Empresa {
 typedef Empresa * SubListaE;
 
 typedef struct Norma {
-
     int norma,cantE;
     char nombre[STR8];
     SubListaE sub;
@@ -27,7 +25,6 @@ typedef struct Norma {
 typedef Norma * TListaN;
 
 void empresaQueCert(TListaN L, int n) {
-
     TListaN actN;
     int numE, max, eMax,i;
     int contE[TOP], numerosE[TOP];
@@ -60,7 +57,7 @@ void empresaQueCert(TListaN L, int n) {
             eMax = numerosE[i];
         }
     }
-    printf("La empresa que mas normas certifico es: %d\n",eMax);
+    printf("La empresa que mas normas certifico es: %d\n",eMax); //falta validar que max sea distinto de -999 sino mostrar otro cartel
 }
 
 void generaM(char M[][COL], TListaN L) {
@@ -73,7 +70,7 @@ void generaM(char M[][COL], TListaN L) {
             actE = actN->sub;
             for(j=0; j<COL; j++) {
                 if(actE != NULL && actE->numE == j) {
-                    M[i][j] = 'S';
+                    M[i][j] = 'S';1
                     actE = actE->sig;
                 }
                 else
@@ -97,14 +94,13 @@ void validaRec(char M[][COL], int x, TCola *C, int i, int j, int n, int cont, in
             if(cont >= x) {
                 poneC(C,j);
                 ++*cont2; //Primero desreferencia y luego aumenta contador, valido porque el ++ a la derecha se despues
-            }
+            }       //pre incremento se evalua despues que el otro operador, post incremento se evalua primero que el otro operador
             validaRec(M,x,C,n,j-1,n,0,cont2);
         }
     }
 }
 
 void Elimina(TListaN *L, TCola *C, int E){
-
     TElementoC elem; TListaN actN;
     SubListaE actE, antE;
     int cent = 9999, aux = 0;
@@ -119,9 +115,8 @@ void Elimina(TListaN *L, TCola *C, int E){
     if(aux) {
         actN = *L;
         while(actN != NULL) {
-
-            if(actN->sub->numE == E || actN->sub->rec == 'N'){
-                actE=actN->sub;
+            if(actN->sub->numE == E && actN->sub->rec == 'N'){ //no queda del todo claro si es && o ||
+                actE = actN->sub;
                 actN->sub = actN->sub->sig;
                 free(actE);
             }
@@ -276,8 +271,8 @@ int main() {
     TCola C;
     int n, x, cont2 = 0, E;
 
-    generaL(&L);
-    if(L != NULL) { //validar que cargo bien la lista antes de hacer todo lo otro (en caso de lectura)
+    generaL(&L); //No es el del parcial, es para probar las demas funciones
+    //if(L != NULL) { //validar que cargo bien la lista antes de hacer todo lo otro (en caso de lectura)
         printf("Ingrese N\n");
         scanf(" %d",&n);
         empresaQueCert(L,n);
@@ -290,6 +285,7 @@ int main() {
                 printf("%c ",M[i][j]);
             printf("\n");
         }
+        // =========
 
         printf("Ingrese X\n");
         scanf(" %d",&x);
