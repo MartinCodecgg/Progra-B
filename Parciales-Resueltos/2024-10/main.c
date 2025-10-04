@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "colas.h"
-
 #define ST7 8
 #define ST5 6
 #define ST30 31
@@ -85,24 +84,26 @@ void generaMultas(TListaD LD, char AG[ST5], unsigned int k) {
     TRmulta reg;
 
     if(arch == NULL)
-        printf("Error al cual el archivo");
+        printf("Error al crear el archivo");
     else {
         Pagente = buscaAgente(LD,AG);
-        actS = Pagente->sub;
-        while(actS != NULL) {
-            contMultas++;
-            if(hallaMes(actS->fecha) % 2 == 0 && (strcmp(actS->hora,"12:00") < 0 || strcmp(actS->hora,"18:00") > 0)) {
-                strcpy(reg.pat,actS->pat);
-                strcpy(reg.hora,actS->hora);
-                reg.fecha = actS->fecha;
-                fwrite(&reg,sizeof(TRmulta),1,arch);
+        if(Pagente) {
+            actS = Pagente->sub;
+            while(actS != NULL) {
+                contMultas++;
+                if(hallaMes(actS->fecha) % 2 == 0 && (strcmp(actS->hora,"12:00") < 0 || strcmp(actS->hora,"18:00") > 0)) {
+                    strcpy(reg.pat,actS->pat);
+                    strcpy(reg.hora,actS->hora);
+                    reg.fecha = actS->fecha;
+                    fwrite(&reg,sizeof(TRmulta),1,arch);
+                }
+                actS = actS->sig;
             }
-            actS = actS->sig;
+            fclose(arch);
+            if(contMultas > k && Pagente->estudiante == 'S')
+                printf("Al agente le corresponde la bonificacion del 15%%\n");
         }
-        fclose(arch);
     }
-    if(contMultas > k && Pagente->estudiante == 'S')
-        printf("Al agente le corresponde la bonificacion del 15%%\n");
 }
 
 void procesaC(TListaD LD, TCola *C) {
