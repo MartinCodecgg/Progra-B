@@ -21,7 +21,8 @@ TListaC busca(TListaC LC, char pal[]) { //verif
             aux = aux->sig;
         return (strcmp(pal, aux->pal) == 0) ? aux : NULL;
     }
-    return NULL;
+    else
+        return NULL;
 }
 
 void insertaLC(TListaC *LC, char pal[]) { //verif
