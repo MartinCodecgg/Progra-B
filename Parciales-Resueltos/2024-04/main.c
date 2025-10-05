@@ -55,8 +55,7 @@ int hallaCantPuestos(TListaD LD) {
 
 Pnodo buscaPuesto(TListaD LD, int pos) {
     unsigned int aux = 1; //usar aux = 1 en este caso para que funcione el rand
-    Pnodo actD;
-    actD = LD.pri;
+    Pnodo actD = LD.pri;
     while(actD != NULL && aux != pos) {
         aux++;
         actD = actD->sig;
@@ -91,13 +90,13 @@ void insertaSubLista(Pnodo Ppuesto, TElementoC elem) {
 void actualizaSub(Pnodo Ppuesto, unsigned int contOB, char estado, char dom[ST7]) {
     SubLista actS, antS;
 
-    antS = NULL;
+    //antS = NULL;
     actS = Ppuesto->sub;
     while(actS != NULL && strcmp(dom, actS->dom) != 0) {
         antS = actS;
         actS = actS->sig;
     }
-    if(actS != NULL) { //verificar el archS ya que el archivo puede venir mal, nadie asegura que este validado
+    if(actS != NULL && strcmp(dom, actS->dom) == 0) { //verificar el actS ya que el archivo puede venir mal, nadie asegura que este validado
         if(estado == 'O')
             actS->cantOB++;
         else {
