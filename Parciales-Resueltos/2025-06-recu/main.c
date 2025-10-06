@@ -96,7 +96,7 @@ void procesaVentas(TListaC *LC, TPila *P) {
         fscanf(archT,"%s %s %s %s %s %f", razon,prov,cod,fecha,cuit,&imp);
         while(!feof(archT)) {
             len = strlen(razon);
-            if(razon[len - 2] == 'A' && razon[len -3] == 'R'
+            if(razon[len - 1] == 'A' && razon[len -2] == 'R'
                && fecha[4] =='5' && fecha[6] =='2' && fecha[7] =='0' && fecha[8] =='2' && fecha[9] =='5') {
                     strcpy(actRazon, razon);
                     strcpy(reg.razon, razon); reg.reNeta = 0;
