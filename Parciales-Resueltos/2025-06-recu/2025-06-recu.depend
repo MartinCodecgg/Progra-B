@@ -4,12 +4,13 @@
 	<stdlib.h>
 	"pilas.h"
 
-1759757852 c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\pilas.h
+1759790743 c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\pilas.h
 
-1759760067 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\main.c
+1759792784 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<math.h>
 	"pilas.h"
 
 1759759248 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\1raversion.c

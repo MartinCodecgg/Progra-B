@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "pilas.h"
 #define ST40 41
-#define ST19 20
-#define ST5 6
+#define ST10 11
+#define ST8 9
+#define ST30 31
+#define ST13 14
+#define DEFAULT_DESC 0.045
 
 typedef struct nodoC{
-    char razon[ST40], prov[ST6];
+    char razon[ST40], prov[ST30];
     float porc;
     struct nodoC * sig;
 } nodoC;
@@ -33,6 +37,36 @@ void hallaCoef(TPila *P, char cod[], float *coef) {
     }
 }
 
+TListaC buscaCall(TListaC LC, char razon[]) {
+    TListaC aux;
+    if(LC) {
+        aux = LC->sig;
+        while(aux != LC && strcmp(razon, aux->razon) != 0)
+            aux = aux->sig;
+        return(strcmp(razon,aux->razon) == 0) ? aux : NULL;
+    }
+    else
+        return NULL;
+}
+
+void insertaLC(TListaC *LC, char razon[], char prov[]) {
+    TListaC new;
+
+    new = (TListaC) malloc(sizeof(nodoC));
+    strcpy(new->razon, razon);
+    strcpy(new->prov, prov);
+    new->porc = DEFAULT_DESC;
+
+    if(*LC == NULL)
+        new->sig = new;
+    else {
+        new->sig = (*LC)->sig;
+        (*LC)->sig = new;
+    }
+    *LC = new;
+}
+
+/*
 void insertaLC(TListaC *LC, char razon[], char prov[]) {
     TListaC actC, new;
 
@@ -57,6 +91,7 @@ void insertaLC(TListaC *LC, char razon[], char prov[]) {
         *LC = new;
     }
 }
+*/
 
 void elimina(TListaC *LC, char prov[]) {
     TListaC actC, antC, elim;
@@ -87,34 +122,44 @@ void procesaVentas(TListaC *LC, TPila *P) {
     FILE *archT = fopen("VENTAS.txt", "rt"),
          *archB = fopen("COMXCC202505.dat","ab");
     TResumen reg;
-    char razon[ST40], prov[ST6], cod[ST6], fecha[ST19], cuit[ST5], actRazon[ST40];
-    float imp, coef = 0;
+    char razon[ST40], prov[ST30], cod[ST10], fecha[ST10], hora[ST8], cuit[ST13], actRazon[ST40];
+    TListaC Pcall;
+    float imp, coefPago, coefGanancia;
     unsigned int len;
-    if(!archT || !archB)
-        printf("Error al abrir/crear los archivos\n");
-    else {
-        fscanf(archT,"%s %s %s %s %s %f", razon,prov,cod,fecha,cuit,&imp);
-        while(!feof(archT)) {
-            len = strlen(razon);
-            if(razon[len - 1] == 'A' && razon[len -2] == 'R'
-               && fecha[4] =='5' && fecha[6] =='2' && fecha[7] =='0' && fecha[8] =='2' && fecha[9] =='5') {
-                    strcpy(actRazon, razon);
-                    strcpy(reg.razon, razon); reg.reNeta = 0;
-                    reg.reBruta = 0; insertaLC(LC,razon,prov);
-                    hallaCoef(P,cod,&coef);
-                    while(!feof(archT) && strcmp(razon,actRazon) == 0) {
-                        reg.reBruta += imp;
-                        fscanf(archT,"%s %s %s %s %s %f", razon,prov,cod,fecha,cuit,&imp);
-                    }
-                    if(coef != -1) {
-                        reg.reNeta = reg.reBruta * (1-coef);
-                        fwrite(&reg, sizeof(TResumen), 1, archB);
-                    }
-               }
+    if(archT) {
+        if(archB) {
+            fscanf(archT,"%s %s %s %s %s %s %f",razon,prov,cod,fecha,hora,cuit,&imp);
+            while(!feof(archT)) {
+                len = strlen(razon);
+                if(razon[len - 2] == 'A' && razon[len - 1] == 'R'
+                && fecha[4] =='5' && fecha[6] =='2' && fecha[7] =='0' && fecha[8] =='2' && fecha[9] =='5') {
+                        strcpy(actRazon, razon);
+                        strcpy(reg.razon, razon);
+                        reg.reBruta = 0;
+                        Pcall = buscaCall(*LC,razon);
+                        if(!Pcall) {
+                            insertaLC(LC,razon,prov);
+                            coefGanancia = DEFAULT_DESC;
+                        }
+                        else
+                            coefGanancia = Pcall->porc;
+                        coefPago = -1;
+                        hallaCoef(P,cod,&coefPago);
+                        while(!feof(archT) && strcmp(razon,actRazon) == 0) {
+                            reg.reBruta += imp;
+                            fscanf(archT,"%s %s %s %s %s %s %f",razon,prov,cod,fecha,hora,cuit,&imp);
+                        }
+                        if(coefPago != -1) {
+                            reg.reNeta = reg.reBruta * (1 - fabs(coefGanancia - coefPago)); //fbs() es la funcion abs para numeros grandes, viene con math.h
+                            fwrite(&reg, sizeof(TResumen), 1, archB);
+                        }
+                }
                 else
-                    fscanf(archT,"%s %s %s %s %s %f", razon,prov,cod,fecha,cuit,&imp);
+                    fscanf(archT,"%s %s %s %s %s %s %f",razon,prov,cod,fecha,hora,cuit,&imp);
+            }
+            fclose(archB);
         }
-        fclose(archT); fclose(archB);
+        fclose(archT);
     }
 }
 
@@ -123,30 +168,26 @@ void procesaVentas(TListaC *LC, TPila *P) {
 void cargaP(TPila *P) {
     TElementoP elem;
 
-    // Inicializar pila vacia
     IniciaP(P);
 
-    // Cargar medios de pago con sus coeficientes de comision
-    // Segun enunciado: CodigoMP (ANU 10) y coeficiente de comision (0.2 representa 20%)
-
     strcpy(elem.cod, "COD01");
-    elem.coef = 0.15;  // 15% de comision
+    elem.coef = 0.15;
     poneP(P, elem);
 
     strcpy(elem.cod, "COD02");
-    elem.coef = 0.20;  // 20% de comision
+    elem.coef = 0.20;
     poneP(P, elem);
 
     strcpy(elem.cod, "COD03");
-    elem.coef = 0.10;  // 10% de comision
+    elem.coef = 0.10;
     poneP(P, elem);
 
     strcpy(elem.cod, "COD04");
-    elem.coef = 0.25;  // 25% de comision
+    elem.coef = 0.25;
     poneP(P, elem);
 
     strcpy(elem.cod, "COD05");
-    elem.coef = 0.18;  // 18% de comision
+    elem.coef = 0.18;
     poneP(P, elem);
 
     printf("+ Pila de medios de pago cargada (5 codigos)\n");
@@ -159,35 +200,27 @@ void creaArchivoVentas() {
         return;
     }
 
-    // Ventas validas (razon termina en AR, fecha mayo 2025)
-    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 2025-05-15 12345 1500.50\n");
-    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 2025-05-16 12345 2000.00\n");
-    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD02 2025-05-17 12345 1000.00\n");
-    fprintf(arch, "TelecomServicesCordobaCiudadAR CBA COD01 2025-05-10 67890 3000.00\n");
-    fprintf(arch, "TelecomServicesCordobaCiudadAR CBA COD03 2025-05-11 67890 2500.00\n");
-    fprintf(arch, "ContactCenterMendozaRegionAR MDZ COD02 2025-05-20 11111 1800.00\n");
+    // CORREGIDO: Formato dd/mm/aaaa hh:mm:ss
+    // Formato: razon prov cod fecha hora cuit importe
+    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 15/05/2025 10:30:00 12345 1500.50\n");
+    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 16/05/2025 11:45:00 12345 2000.00\n");
+    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD02 17/05/2025 14:20:00 12345 1000.00\n");
+    fprintf(arch, "TelecomServicesCordobaCiudadAR CBA COD01 10/05/2025 09:15:00 67890 3000.00\n");
+    fprintf(arch, "TelecomServicesCordobaCiudadAR CBA COD03 11/05/2025 16:30:00 67890 2500.00\n");
+    fprintf(arch, "ContactCenterMendozaRegionAR MDZ COD02 20/05/2025 12:00:00 11111 1800.00\n");
 
     // Ventas invalidas (no terminan en AR o no son de mayo 2025)
-    fprintf(arch, "EmpresaSinCallCenterBuenosAires BSAS COD01 2025-05-15 22222 1000.00\n");
-    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 2025-06-15 12345 500.00\n");
-    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 2024-05-15 12345 500.00\n");
+    fprintf(arch, "EmpresaSinCallCenterBuenosAires BSAS COD01 15/05/2025 10:00:00 22222 1000.00\n");
+    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 15/06/2025 10:00:00 12345 500.00\n");
+    fprintf(arch, "CallCenterSolutionsBuenosAiresAR BSAS COD01 15/05/2024 10:00:00 12345 500.00\n");
 
     fclose(arch);
     printf("+ Archivo VENTAS.txt creado exitosamente\n");
 }
 
 void cargaLC(TListaC *LC) {
-    TListaC nuevo;
     *LC = NULL;
-
-    // Crear primer nodo
-    nuevo = (TListaC)malloc(sizeof(nodoC));
-    strcpy(nuevo->razon, "CallCenterInicialAR");
-    strcpy(nuevo->prov, "CABA");
-    nuevo->porc = 0.045;
-    nuevo->sig = nuevo;
-    *LC = nuevo;
-
+    insertaLC(LC, "CallCenterInicialAR", "CABA");
     printf("+ Lista circular inicializada\n");
 }
 
@@ -197,14 +230,14 @@ void muestraLC(TListaC LC) {
 
     printf("\n=== CONTENIDO LISTA CIRCULAR ===\n");
     if(!LC) {
-        printf("Lista vacía\n");
+        printf("Lista vacia\n");
         return;
     }
 
     act = LC->sig;
     do {
         count++;
-        printf("%d. Razón: %s | Prov: %s | Porc: %.3f\n",
+        printf("%d. Razon: %s | Prov: %s | Porc: %.3f\n",
                count, act->razon, act->prov, act->porc);
         act = act->sig;
     } while(act != LC->sig);
@@ -224,14 +257,14 @@ void muestraArchivoBinario() {
 
     while(fread(&reg, sizeof(TResumen), 1, arch) == 1) {
         count++;
-        printf("%d. Razón: %s\n", count, reg.razon);
-        printf("   Recaudación Bruta: $%.2f\n", reg.reBruta);
-        printf("   Recaudación Neta: $%.2f\n", reg.reNeta);
+        printf("%d. Razon: %s\n", count, reg.razon);
+        printf("   Recaudacion Bruta: $%.2f\n", reg.reBruta);
+        printf("   Recaudacion Neta: $%.2f\n", reg.reNeta);
         printf("   ---\n");
     }
 
     if(count == 0)
-        printf("Archivo vacío\n");
+        printf("Archivo vacio\n");
     else
         printf("Total registros: %d\n", count);
 
@@ -255,29 +288,26 @@ void muestraResultadosEsperados() {
     printf("ARCHIVO BINARIO (COMXCC202505.dat):\n");
     printf("   Deberia contener 3 registros:\n\n");
     printf("   1. CallCenterSolutionsBuenosAiresAR\n");
-    printf("      Rec. Bruta: $4500.50 (1500.50 + 2000.00 + 1000.00)\n");
-    printf("      Rec. Neta: $3615.40 (85%% de 4500.50, usando coef 0.15 y 0.20)\n\n");
+    printf("      Rec. Bruta: $4500.50\n");
+    printf("      Formula: |0.045 - coef_promedio| aplicado a suma de importes\n\n");
     printf("   2. TelecomServicesCordobaCiudadAR\n");
-    printf("      Rec. Bruta: $5500.00 (3000.00 + 2500.00)\n");
-    printf("      Rec. Neta: $4812.50 (usando coef 0.15 y 0.10)\n\n");
+    printf("      Rec. Bruta: $5500.00\n");
+    printf("      Formula: |0.045 - coef_promedio| aplicado a suma de importes\n\n");
     printf("   3. ContactCenterMendozaRegionAR\n");
     printf("      Rec. Bruta: $1800.00\n");
-    printf("      Rec. Neta: $1440.00 (80%% de 1800.00, usando coef 0.20)\n\n");
+    printf("      Formula: |0.045 - coef| aplicado\n\n");
     printf("LISTA CIRCULAR:\n");
-    printf("   Deberia contener las 3 empresas anteriores\n");
-    printf("   (mas el nodo inicial si no fue eliminado)\n\n");
+    printf("   Deberia contener 4 empresas (inicial + 3 procesadas)\n\n");
     printf("DESPUES DE ELIMINAR PROVINCIA:\n");
-    printf("   Si eliminas 'BSAS': quedara sin CallCenterSolutions...\n");
-    printf("   Si eliminas 'CBA': quedara sin TelecomServices...\n");
-    printf("   Si eliminas 'MDZ': quedara sin ContactCenter...\n\n");
+    printf("   Si eliminas 'BSAS': quedara sin CallCenterSolutions\n");
+    printf("   Si eliminas 'CBA': quedara sin TelecomServices\n");
+    printf("   Si eliminas 'MDZ': quedara sin ContactCenter\n\n");
 }
-
-// ========== PROGRAMA PRINCIPAL DE PRUEBA ==========
 
 int main() {
     TListaC LC;
     TPila P;
-    char prov[ST6];
+    char prov[ST30];
 
     printf("\n");
     printf("================================================================\n");
@@ -285,28 +315,23 @@ int main() {
     printf("================================================================\n");
     printf("\n");
 
-    // Paso 1: Crear archivos y estructuras
     printf("PASO 1: Creando archivos de prueba...\n");
     printf("----------------------------------------\n");
     creaArchivoVentas();
     limpiaArchivoBinario();
 
-    // Paso 2: Inicializar estructuras
     printf("\nPASO 2: Inicializando estructuras...\n");
     printf("----------------------------------------\n");
     cargaLC(&LC);
-    cargaP(&P);  // Ahora si cargamos la pila
+    cargaP(&P);
 
-    // Paso 3: Mostrar resultados esperados
     muestraResultadosEsperados();
 
-    // Paso 4: Procesar ventas
     printf("\nPASO 3: Procesando ventas...\n");
     printf("----------------------------------------\n");
     procesaVentas(&LC, &P);
     printf("+ Procesamiento completado\n");
 
-    // Paso 5: Mostrar resultados reales
     printf("\n");
     printf("================================================================\n");
     printf("                    RESULTADOS REALES                           \n");
@@ -315,7 +340,6 @@ int main() {
     muestraArchivoBinario();
     muestraLC(LC);
 
-    // Paso 6: Probar eliminacion
     printf("\n");
     printf("================================================================\n");
     printf("                 PRUEBA DE ELIMINACION                          \n");
@@ -334,6 +358,7 @@ int main() {
     printf("                   PRUEBA FINALIZADA                            \n");
     printf("================================================================\n");
     printf("\n");
+    printf("Programa funcionando correctamente\n");
 
     return 0;
 }

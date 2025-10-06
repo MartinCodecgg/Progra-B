@@ -1,9 +1,9 @@
 #ifndef PILAS_H_INCLUDED
 #define PILAS_H_INCLUDED
-#define ST6 7
+#define ST10 11
 
 typedef struct{
-    char cod[ST6];
+    char cod[ST10];
     float coef; } TElementoP;
 
 typedef struct nodop {
