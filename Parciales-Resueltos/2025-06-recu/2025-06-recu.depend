@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1759757870 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\pilas.c
+	<stdio.h>
+	<stdlib.h>
+	"pilas.h"
+
+1759757852 c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\pilas.h
+
+1759760067 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pilas.h"
+
+1759759248 source:c:\users\defin\documents\archivos github\progra-b\parciales-resueltos\2025-06-recu\1raversion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"pilas.h"
+

@@ -1,0 +1,25 @@
+#ifndef PILAS_H_INCLUDED
+#define PILAS_H_INCLUDED
+#define ST6 7
+
+typedef struct{
+    char cod[ST6];
+    float coef; } TElementoP;
+
+typedef struct nodop {
+TElementoP dato;
+struct nodop *sig; } nodop;
+
+typedef nodop *TPila;
+
+void poneP(TPila *P, TElementoP x);
+
+void sacaP(TPila *P, TElementoP * x);
+
+TElementoP consultaP(TPila P);
+
+int VaciaP(TPila P);
+
+void IniciaP(TPila *P);
+
+#endif // PILAS_H_INCLUDED
