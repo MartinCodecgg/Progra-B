@@ -3,13 +3,10 @@
 #include <string.h>
 
 void muestraLD(TListaD LD) { //verif
-    Pnodo aux;
-    if(LD.pri) { //LD es simplemente un struct con dos campos, asi que accedo con .pri y no con flecha
-        aux = LD.pri;       //Si pasase como referencia a LD si usaria flecha
-        while(aux) {
-            printf("%c ", aux->dato);
-            aux = aux->sig;
-        }
+    Pnodo aux = LD.pri;
+    while(aux) {
+        printf("%c ", aux->dato);
+        aux = aux->sig;
     }
 }
 

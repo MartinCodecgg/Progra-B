@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-void muestraL(TLista L) {
+void muestraL(TLista L) { //verif
     while(L) {
         printf("%c ",L->dato);
         L = L->sig;
     }
 }
 
-TListaL buscaL(TLista L, char pal[]) {
+TListaL buscaL(TLista L, char pal[]) { //verif
     while(L && strcmp(pal,L->pal) != 0)
         L = L->sig;
     return L;
 }
 
-void elimina(TLista *L, char pal[]) {
+void elimina(TLista *L, char pal[]) { //verif
     TLista actL, antL;
     actL = *L;
     while(actL && strcmp(pal,actL->pal) != 0) {
@@ -31,7 +31,7 @@ void elimina(TLista *L, char pal[]) {
     }
 }
 
-void eliminaPos(TLista *L, unsigned int pos) {
+void eliminaPos(TLista *L, unsigned int pos) { //verif
     TLista actL, antL;
     unsigned int aux = 0;
     actL = *L;
@@ -49,11 +49,11 @@ void eliminaPos(TLista *L, unsigned int pos) {
     }
 }
 
-void eliminacionSucesiva(TLista *L, char pal[]) {
+void eliminacionSucesiva(TLista *L, char pal[]) { //verif
     TLista actL, antL, elim;
     actL = *L;
     while(actL) {
-        if(strcmp(pal, actL->pal) == 0) {
+        if(strcmp(pal,actL->pal) == 0) {
             elim = actL;
             if(actL == *L)
                 (*L) = (*L)->sig;
@@ -69,11 +69,12 @@ void eliminacionSucesiva(TLista *L, char pal[]) {
     }
 }
 
-void inserta(TLista L, char pal[]) {
-
+void insertaOrd(TLista *L, char pal[]) { //veri
+    TLista actL, antL, new;
     new = (TLista) malloc(sizeof(nodo)); //(si corresponde)
-    act = *L;
-    while(act && strcmp(pal,act->dato) {
+    //asignar datos
+    actL = *L;
+    while(actL && strcmp(pal,actL->pal) > 0) {
         antL = actL;
         actL = actL->sig;
     }
@@ -85,11 +86,5 @@ void inserta(TLista L, char pal[]) {
 }
 
 int main() {
-
-
-
-
-
-
     return 0;
 }
