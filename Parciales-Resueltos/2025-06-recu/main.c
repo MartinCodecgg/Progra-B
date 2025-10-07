@@ -23,7 +23,7 @@ typedef struct {
     float reBruta, reNeta;
 } TResumen;
 
-// TUS FUNCIONES ORIGINALES (sin modificar)
+// === FUNCIONES DEL PARCIAL ===
 
 void hallaCoef(TPila *P, char cod[], float *coef) {
     TElementoP elem;
@@ -145,12 +145,12 @@ void procesaVentas(TListaC *LC, TPila *P) {
                             coefGanancia = Pcall->porc;
                         coefPago = -1;
                         hallaCoef(P,cod,&coefPago);
-                        while(!feof(archT) && strcmp(razon,actRazon) == 0) {
+                        while(!feof(archT) && strcmp(razon,actRazon) == 0 && coefPago != -1) {
                             reg.reBruta += imp;
                             fscanf(archT,"%s %s %s %s %s %s %f",razon,prov,cod,fecha,hora,cuit,&imp);
                         }
                         if(coefPago != -1) {
-                            reg.reNeta = reg.reBruta * (1 - fabs(coefGanancia - coefPago)); //fbs() es la funcion abs para numeros grandes, viene con math.h
+                            reg.reNeta = reg.reBruta * (1 - fabs(coefGanancia - coefPago)); //fbs() es la funcion abs para numeros reales, viene con math.h
                             fwrite(&reg, sizeof(TResumen), 1, archB);
                         }
                 }

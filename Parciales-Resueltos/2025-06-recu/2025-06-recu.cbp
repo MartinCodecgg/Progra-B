@@ -31,9 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="1raVersion.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="pilas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pilas.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
