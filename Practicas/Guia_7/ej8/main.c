@@ -58,14 +58,14 @@ void ganador(Arbol A) {
 
 void finalistas(Arbol A) {
     if(A) {
-        printf("%s\n", A->der->nom);
+        printf("%s\n", A->der->nom); //convenia mas usar un solo printf()
         printf("%s\n", A->izq->nom);
     }
 }
 
 void semifinalistas(Arbol A) {
     if(A) {
-        printf("%s\n", A->der->izq->nom);
+        printf("%s\n", A->der->izq->nom); //convenia mas usar un solo printf()
         printf("%s\n", A->der->der->nom);
         printf("%s\n", A->izq->der->nom);
         printf("%s\n", A->izq->izq->nom);
