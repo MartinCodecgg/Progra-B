@@ -140,15 +140,18 @@ void longPalMasLarga(ArbolCAD A2, int *maxLong) {
 }
 
 int longPalMasLargaInt(ArbolCAD A2) {
-    int resIzq, resDer;
+    int resIzq, resDer, aux;
     if (A2) {
         resIzq = longPalMasLargaInt(A2->izq);
         resDer = longPalMasLargaInt(A2->der);
 
-        if (resIzq > strlen(A2->dato))
-            return resIzq;
-        if (resDer > strlen(A2->dato))
-            return resDer;
+        aux = strlen(A2->dato);
+        if (resIzq > aux)
+            aux = resIzq;
+        if (resDer > aux)
+            aux = resDer;
+
+        return aux;
     }
     else
         return 0;
