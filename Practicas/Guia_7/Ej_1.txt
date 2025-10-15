@@ -1,0 +1,68 @@
+1-a)
+
+preorden:
+5-8-3-6-4-1-2
+
+inorden:
+3-8-6-5-2-1-4 mal
+3-8-6-5-4-1-2 bien
+(como el 4 del subárbol derecho no tiene izquierdo entonces se visita primero el 4)
+
+postOrden:
+3-6-8-2-1-4-5
+
+Contenido del nodo raíz: 5
+
+Para cada nodo:
+
+5
+
+grado : 2
+nivel: 1
+valor del padre: no tiene
+valor del hermano: no tiene
+
+8
+
+grado : 2
+nivel: 2
+valor del padre: 5
+valor del hermano: 4
+
+3
+
+grado : 0
+nivel: 3
+valor del padre: 8
+valor del hermano: 6
+
+6
+
+grado : 0
+nivel: 3
+valor del padre: 8
+valor del hermano: 3
+
+4
+
+grado : 1
+nivel: 2
+valor del padre: 5
+valor del hermano: 8
+
+1
+
+grado : 1
+nivel: 3
+valor del padre: 4
+valor del hermano: no tiene
+
+2
+
+grado : 0
+nivel: 4
+valor del padre: 1
+valor del hermano: no tiene
+
+b) Profundidad del Arbol = nivelMax - 1 = 3
+

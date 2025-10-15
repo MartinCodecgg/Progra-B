@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1760468091 source:c:\users\defin\documents\archivos github\progra-b\practicas\guia_7\ej6\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
