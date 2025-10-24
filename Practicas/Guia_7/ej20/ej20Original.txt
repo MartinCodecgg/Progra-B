@@ -1,0 +1,102 @@
+#include <stdio.h>
+
+typedef struct nodo {
+    int dato;
+    struct nodo *izq, *der;
+} nodo;
+
+typedef nodo * Arbol;
+//20a
+int cantNenNivImpares(Arbol A, int cont) {
+    if(A) {
+        cont++;
+        if(cont % 2 != 0)
+            return 1 + cantNenNivImpares(A->izq, cont) + cantNenNivImpares(A->der, cont);
+        else
+            return cantNenNivImpares(A->izq, cont) + cantNenNivImpares(A->der, cont);
+    }
+    else
+        return 0;
+}
+//auxiliar para 20b
+int grado(Arbol A) {
+    int gr = 0;
+    A = A->izq;
+    while(A) {
+        gr++;
+        A = A->der;
+    }
+    return gr;
+}
+//20b
+void promedio(Arbol A, int k, int *acum, int *cont) {
+    if(A) {
+        if(grado(A) == k) {
+            (*cont)++;
+            *acum += A->dato;
+        }
+        promedio(A->izq, k, acum, cont);
+        promedio(A->der, k, acum, cont);
+    }
+}
+
+/*
+Alternativas a 20b)
+1) Con funcion int, seria la misma logica pero deberia retornar un struct con acum y cont
+*/
+//20c //innecesario, sumar directamente cuando llamo a izquierda, si izquiera es null el contador se pierde
+void altura(Arbol A,int *alturaMax, int cont) {
+    if(A) {
+        if(A->izq)
+            cont++;
+        altura(A->izq, alturaMax, cont);
+        altura(A->der, alturaMax, cont);
+    }
+    else
+        if (cont > *alturaMax)
+            *alturaMax = cont;
+}
+
+/*
+ALTERNATIVA (mejor)
+
+void altura(Arbol A, int *alturaMax, int cont) {
+    if(A) {
+        if(cont > *alturaMax)
+            *alturaMax = cont;
+        altura(A->izq, alturaMax, cont + 1);  // Incrementas al bajar
+        altura(A->der, alturaMax, cont);       // Mantienes nivel al ir al hermano
+    }
+}
+*/
+//20d
+void gradoArbolG(Arbol AB, int *grado, int cont) {
+    if(AB) {
+        gradoArbolG(AB->izq, grado, 1); //recordar poner poner el 1 porque el mismo hijo cuenta
+        gradoArbolG(AB->der, grado, cont + 1);
+    }
+    else {
+        cont--;
+        if(cont > *grado)
+            *grado = cont;
+    }
+}
+
+int main() {
+    Arbol A;
+    //carga(&A);
+    int acum = 0, cont = 0, k = 2, alturaMax = -1, grado = -1;
+
+    printf("cantidad de nodos que habia en niveles impares %d",cantNenNivImpares(A->izq, 1));
+
+    promedio(A, k, &acum, &cont);
+    if(cont)
+        printf("El promedio de las claves cuyo grado era K (dato de entrada) es %d", acum/cont);
+
+    altura(A->izq, &alturaMax, 0);
+    printf("La altura maxima del arbol es: %d", alturaMax);
+
+    gradoArbolG(A->izq, &grado, 1);
+
+    return 0;
+}

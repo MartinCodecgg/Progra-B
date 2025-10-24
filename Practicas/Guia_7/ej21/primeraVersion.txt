@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodo {
+    int dato;
+    struct nodo *izq, *der;
+} nodo;
+typedef nodo * Arbol;
+
+void altura(Arbol A, int k, int *alturaMax, int cont) {
+    if(A && *alturaMax < k) {
+        if(A->izq)
+            cont++;
+        altura(A->izq, k, alturaMax, cont);
+        altura(A->der, k, alturaMax, cont);
+    }
+    else
+        if (cont > *alturaMax)
+            *alturaMax = cont;
+}
+
+void cantH(Arbol A, int k, int *cant) {
+    int alturaAct;
+    while(A) {
+        alturaAct = 0;
+        altura(A->izq, k, &alturaAct, 1);
+        if(alturaAct >= k)
+            (*cant)++;
+        A = A->der;
+    }
+}
+
+int main() {
+    Arbol A;
+    int k = 2, cant = 0;
+
+    cantH(A, k, &cant);
+    printf("La cantidad de árboles del bosque que tenían altura al menos K (dato de entrada) es %d", cant);
+
+    return 0;
+}
