@@ -33,7 +33,7 @@ void porcentaje(ArbolG A, Pos p, int *contNodos, int *contPares) {
 
 void hallaGrado(ArbolG A, Pos p, int *gradoMax) {
     Pos c;
-    unsigned gr = 0;
+    unsigned int gr = 0;
     if(!Nulo(p)) {
         c = HijoMasIzq(p, A);
         while(!Nulo(c)) {
@@ -45,6 +45,24 @@ void hallaGrado(ArbolG A, Pos p, int *gradoMax) {
             *gradoMax = gr;
     }
 }
+ //Solucion usando INT (es mejor asi), enves de usar el parametro de salida se usan dos variables mas
+/*
+int gradoArbol (arbol a, pos p) {
+  int grado = 0, max = 0, aux;
+  pos c;
+  if (!nulo (p) ) {
+    c = hijoMasIzq(p,a);
+    while (!nulo(c)) {
+      grado++;
+      aux = gradoArbol(c,a);
+      if (aux > max)
+        max = aux;
+      c = hermanoDer(c,a);
+    }
+  }
+  return (grado>max) ? grado : max;
+}
+*/
 
 int cantNImpar(ArbolG A, Pos p, int nivel) {
     Pos c;
