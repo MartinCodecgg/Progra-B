@@ -23,7 +23,7 @@ void suma(Arbol A, int *acum, int nivelActual, int x) {
     }
 }
 
-int sumaInt(Arbol A, int nivelActual, int x) {
+int sumaInt(Arbol A, int nivelActual, int x) { //hubiese sido mas claro hacer la logica del return todo en el unico nivel que es valido
     int aux;
     if(A) {
         nivelActual++;
@@ -52,7 +52,7 @@ void addnodo(Arbol* A, int e) {
 }
 
 void cargaArbolINT(Arbol *A) {
-    addnodo(A, 5); // raíz
+    addnodo(A, 5); // raï¿½z
     addnodo(&(*A)->izq, 8);
     addnodo(&(*A)->der, 4);
     addnodo(&(*A)->izq->izq, 3);

@@ -1,3 +1,6 @@
+
+// === La matriz de predecesores (prede o predecesores) esta conceptualmente mal formada aunque el algoritmo funcione ===
+
 #include <stdio.h>
 #define N 4
 #define MAX_VAL 99999

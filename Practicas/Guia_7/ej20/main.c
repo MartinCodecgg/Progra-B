@@ -65,6 +65,35 @@ void altura(Arbol A, int *alturaMax, int cont) {
             *alturaMax = cont;
 }
 
+int alturaInt(Arbol ABB, int cont) {
+    int aux, altIzq, altDer; //la variable aux se podria quitar pero es mas clara que usar directmaente cont
+    if(ABB == NULL)
+        return -1;
+    else {
+        altIzq = alturaInt(ABB->izq, cont + 1);
+        altDer = alturaInt(ABB->der, cont);
+        aux = cont; //no es necesario comparar con el actual, porque el actual siempre sera menor o igual que sus hijos
+        if(altIzq > aux) //asi como hice abajo, puedo incrementar con el return y en caso de que los hijos sean NULL al devolver -1 termina quedando cero
+            aux = altIzq;
+        if(altDer > aux)
+            aux = altDer;
+    return aux;
+    }
+} //llamada main: altura(ABB,0);
+
+//optimizada (ia) (complejo)
+//no es necesario cont ya que puedo contar la altura con el return y a la vez quedarme con el maximo con una simple comparacion
+int alturaInt2(Arbol ABB) {
+    if(ABB == NULL)
+        return -1;
+    else {
+        int altIzq = alturaInt2(ABB->izq);
+        int altDer = alturaInt2(ABB->der);
+        return (altIzq >= altDer) ? altIzq + 1 : altDer;
+    }
+}
+//Se compara el hijo izq y el der como estan y si el izq es mayor se suma uno para contar la diferencia de altura al bajar a izquierda
+
 //20d
 void gradoArbolG(Arbol AB, int *grado, int cont) {
     if(AB) {
@@ -77,6 +106,56 @@ void gradoArbolG(Arbol AB, int *grado, int cont) {
             *grado = cont;
     }
 }
+
+//version int
+int gradoOri(Arbol AB) {
+    int grIzq, grDer;
+    Arbol act;
+    int aux = 0;
+    if(AB == NULL)
+        return -1;
+    else {
+        act = AB->izq;
+        while(act) {
+            aux++;
+            act = act->der;
+        }
+        grIzq = gradoOri(AB);
+        grDer = gradoOri(AB);
+
+        if(grIzq > aux)
+            aux = grIzq;
+        if(grDer > aux)
+            aux = grDer;
+        
+        return aux;
+    }
+}
+
+//version int optimizada (ia)
+//esta version procesa menos nodos, la anterior lo que tenia es que algunos nodos a derecha los procesaba dos veces
+int gradoOri(Arbol AB) {
+    Arbol act;
+    int gr = 0, maxGrado = 0;
+    
+    if(AB == NULL)
+        return 0;
+    else {
+        act = AB->izq;
+        while(act) {
+            gr++; //va contando el grado del nodo actual, analizando sus hijos a der
+            int gradoHijo = gradoOri(act);
+            if(gradoHijo > maxGrado)
+                maxGrado = gradoHijo;
+            act = act->der;  
+        }
+
+        return (gr > maxGrado) ? gr : maxGrado; //compara si el grado del nodo actual es mayor que los grados de sus hijos y devuelve el mayor
+    }
+}
+
+
+
 
 // Función para imprimir el árbol (para visualización)
 void imprimirArbol(Arbol A, int nivel, char lado) {

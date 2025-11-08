@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 /*
-12. Determinar cuántos elementos de un ABB son mayores que A y menores que B.
-A y B son parámetros de entrada.
+12. Determinar cuï¿½ntos elementos de un ABB son mayores que A y menores que B.
+A y B son parï¿½metros de entrada.
 */
 
 typedef struct nodo {
@@ -13,7 +13,7 @@ typedef struct nodo {
 
 typedef nodo * Arbol;
 
-// --- Función para crear un nuevo nodo ---
+// --- Funciï¿½n para crear un nuevo nodo ---
 Arbol crearNodo(int dato) {
     Arbol nuevo = (Arbol) malloc(sizeof(nodo));
     nuevo->dato = dato;
@@ -21,7 +21,7 @@ Arbol crearNodo(int dato) {
     return nuevo;
 }
 
-// --- Función para insertar un dato en el ABB ---
+// --- Funciï¿½n para insertar un dato en el ABB ---
 Arbol insertar(Arbol ABB, int dato) {
     if (ABB == NULL)
         return crearNodo(dato);
@@ -33,7 +33,7 @@ Arbol insertar(Arbol ABB, int dato) {
     return ABB;
 }
 
-// --- Tu función original (solo corregí el parámetro cont) ---
+// --- Tu funciï¿½n original (solo corregï¿½ el parï¿½metro cont) ---
 void determinar(Arbol ABB, int A, int B, int *cont) {
     if (ABB) {
         if (ABB->dato > A && ABB->dato < B)
@@ -46,7 +46,24 @@ void determinar(Arbol ABB, int A, int B, int *cont) {
     }
 }
 
-// --- Función para mostrar el árbol en orden (opcional, para verificar) ---
+int determinarInt(Arbol ABB, int A, int B) {
+    int cont = 0;
+
+    if(ABB == NULL)
+        return 0;
+    else {
+        if(ABB->dato > A && ABB->dato < B)
+            cont = 1;
+        if(ABB->dato > A)
+            cont += determinarInt(ABB->izq, A, B);
+        if(ABB->dato < B)
+            cont += determinarInt(ABB->der, A, B);
+        
+        return cont;
+    }
+}
+
+// --- Funciï¿½n para mostrar el ï¿½rbol en orden (opcional, para verificar) ---
 void inorden(Arbol ABB) {
     if (ABB) {
         inorden(ABB->izq);

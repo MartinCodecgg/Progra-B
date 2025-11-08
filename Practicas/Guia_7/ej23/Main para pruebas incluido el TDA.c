@@ -62,7 +62,7 @@ void agregarHijo(Pos padre, Pos hijo) {
     }
 }
 
-// Crear el árbol del ejercicio 22
+// Crear el ï¿½rbol del ejercicio 22
 ArbolG crearArbolEjemplo() {
     // Nivel 1
     Pos B = crearNodo(2);
@@ -84,7 +84,7 @@ ArbolG crearArbolEjemplo() {
     Pos K = crearNodo(23);
     Pos M = crearNodo(29);
 
-    // Construir el árbol
+    // Construir el ï¿½rbol
     agregarHijo(B, C);
     agregarHijo(B, D);
 
@@ -195,6 +195,24 @@ int verifInt(ArbolG A, Pos p) {
     return 1;
 }
 
+//O mejor aun para no romper el paradigma de la programacion estructurada (al usar mas de un return) podria hacer:
+
+int verifInt2(ArbolG A, Pos p) {
+    Pos c;
+    int contHijos = 0, HijoCumple = 1, esHoja = 0;
+    if(!Nulo(p)) {
+        c = HijoMasIzq(p, A);
+        if(Nulo(c))
+            esHoja = 1;
+        while(!Nulo(c) && HijoCumple) {
+            contHijos++;
+            HijoCumple = verifInt2(A, c);
+            c = HnoDer(c, A);
+        }
+    }
+    return esHoja || (contHijos == 0 && InfoP(p,A) == 0) || (HijoCumple && contHijos == Info(p, A));
+} //(es mejor usar mas de un return y ya)
+
 void verifVoid(ArbolG A, Pos p, int *cond) {
     Pos c;
     int contHijos = 0, esHoja = 0;
@@ -220,24 +238,25 @@ void promedio(ArbolG A, Pos p, int k, int nivel, int *acum, int *cont) {
             *acum += Info(p, A);
             (*cont)++;
         }
-        if(nivel < k) {
-            c = HijoMasIzq(p, A);
-            while(!Nulo(c)) {
-                promedio(A, c, k, nivel + 1, acum, cont);
-                c = HnoDer(c, A);
+        else
+            if(nivel < k) {
+                c = HijoMasIzq(p, A);
+                while(!Nulo(c)) {
+                    promedio(A, c, k, nivel + 1, acum, cont);
+                    c = HnoDer(c, A);
             }
         }
     }
 }
 
-// ==================== FUNCIÓN MAIN ====================
+// ==================== FUNCIï¿½N MAIN ====================
 
 int main() {
     ArbolG A;
     int gradoMax = 0, cond = 1, contNodos = 0, contPares = 0, k, acum = 0, cont = 0;
 
-    printf("=== CREANDO ÁRBOL DE EJEMPLO ===\n");
-    printf("Estructura del árbol:\n");
+    printf("=== CREANDO ï¿½RBOL DE EJEMPLO ===\n");
+    printf("Estructura del ï¿½rbol:\n");
     printf("        B(2)\n");
     printf("       /   \\\n");
     printf("     C(3)  D(5)\n");
@@ -258,20 +277,20 @@ int main() {
     if(contNodos > 0)
         printf("b) Porcentaje de claves pares: %.2f%%\n", (float)contPares/contNodos * 100);
 
-    // c) Grado del árbol
+    // c) Grado del ï¿½rbol
     hallaGrado(A, Raiz(A), &gradoMax);
-    printf("c) Grado del árbol: %d\n", gradoMax);
+    printf("c) Grado del ï¿½rbol: %d\n", gradoMax);
 
     // d) Nodos de grado impar en niveles impares
     printf("d) Nodos de grado impar en niveles impares: %d\n", cantNImpar(A, Raiz(A), 0));
 
-    // e) Verificar propiedad (versión int)
+    // e) Verificar propiedad (versiï¿½n int)
     if(verifInt(A, Raiz(A)))
         printf("e) Cumple la propiedad (verifInt)\n");
     else
         printf("e) NO cumple la propiedad (verifInt)\n");
 
-    // e) Verificar propiedad (versión void)
+    // e) Verificar propiedad (versiï¿½n void)
     cond = 1;
     verifVoid(A, Raiz(A), &cond);
     if(cond)

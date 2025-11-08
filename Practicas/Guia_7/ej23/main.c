@@ -5,7 +5,7 @@ int cantN(ArbolG A, Pos p) {
     Pos c;
     unsigned int cont = 0;
 
-    if(!Nulo(p)) { //no considerar unicamente la cabeza y sus unicos inmediatos, analizar al menos para los 3 primeros niveles.
+    if(!Nulo(p)) { //no considerar unicamente la cabeza y sus hijos inmediatos, analizar al menos para los 3 primeros niveles.
         c = HijoMasIzq(p,A);
         while(!Nulo(c)) {
             cont += cantN(A, c);
@@ -60,7 +60,7 @@ int gradoArbol (arbol a, pos p) {
       c = hermanoDer(c,a);
     }
   }
-  return (grado>max) ? grado : max;
+  return (grado>max) ?ï¿½gradoï¿½:ï¿½max;
 }
 */
 

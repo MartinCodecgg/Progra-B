@@ -11,7 +11,7 @@ typedef nodo *Arbol;
 // FUNCION DE INSERCION
 // ============================================
 void inserta(Arbol *A, int x) {
-    Arbol act, new, padre; //la variable padre vendria a ser como el ant cuando trabajamos con listas, para poder enlazar correctamente
+    Arbol act, new, ant;
     unsigned int fueIzq;
 
     new = (Arbol) malloc(sizeof(nodo));
@@ -20,9 +20,9 @@ void inserta(Arbol *A, int x) {
     new->izq = NULL;
 
     act = *A;
-    //padre = NULL; //innecesario
+    //ant = NULL; //innecesario
     while(act) {
-        padre = act;
+        ant = act;
         if(x < act->dato) {
             act = act->izq;
             fueIzq = 1;
@@ -34,11 +34,11 @@ void inserta(Arbol *A, int x) {
     }
     if(*A == NULL)
         *A = new;
-    else {
+    else { //llaves innecesarias
         if(fueIzq)
-            padre->izq = new;
+            ant->izq = new;
         else
-            padre->der = new;
+            ant->der = new;
     }
 }
 

@@ -1,0 +1,103 @@
+#include <stdio.h>
+#define N 50
+#define MAX_VAL 99999
+
+int conjuntoCompleto(int S[], int n) {
+    int i = 0;
+    while(i < n && S[i] == 1)
+        i++;
+    return i == n;
+}
+
+void djikstraALL(int mat[][N], int n, int origen, int D[], int prede[]) {
+    int j, v, min, pesoMin, S[N]; //aux[N]; // v = vertice
+    //inicializaciones
+    for(j = 0; j < n; j++) {
+        D[j] = MAX_VAL;
+        S[j] = 0;
+    }
+    D[origen] = 0;
+    S[origen] = 1;
+    prede[origen] = -1;
+    v = origen;
+
+    while(!conjuntoCompleto(S, n)) {
+        pesoMin = MAX_VAL;
+        for(j = 0; j < n; j++) {
+            if(mat[v][j] != 0 && S[j] == 0 && mat[v][j] + D[v] < D[j]) {
+                D[j] = mat[v][j] + D[v];
+                prede[j] = v;
+            }
+            if(S[j] == 0 && D[j] < pesoMin) {
+                min = j;
+                pesoMin = D[j];
+            }
+        }
+        if(pesoMin != MAX_VAL) {
+            S[min] = 1;
+            v = min;
+        }
+    }
+    /* ===Algoritmo para mostrar camino mas corto entre un par de vertices teniendo como dato el destino===
+    printf("Camino minimo resultante:\n");
+    v = destino;
+    // con el valor del v q corresponde al ultimo elemento procesado:
+    j = 0;
+    while(v != -1) {
+        aux[j] = v;
+        j++;
+        v = predecesores[v];
+    }
+
+    for(j = j-1; j >= 0; j--)
+        printf("%d ",aux[j]);
+        if(j > 0)
+            printf("-> ");
+
+    printf("\n");
+    */
+}
+
+void caminoMasCortoEntrePares(int mat[][N], int n, int caminos[][N]) {
+    int distancias[N], i, j, k, predecesores[N][N], prede[N], v, aux[N];
+
+    for(i = 0; i < n; i++) {
+        djikstraALL(mat, n, i, distancias, prede);
+        for(k = 0; k < n; k++) {
+            caminos[i][k] = distancias[k];
+            predecesores[i][k] = prede[k];
+        }
+    }
+
+    for(i = 0; i < n; i++)
+        for(j = 0; j < n; j++) {
+            if(i != j) { //descarto si el destino y origen son iguales
+                printf("De %d a %d: ", i, j);
+
+                k = 0;
+                v = j;
+                while(v != -1) {
+                    aux[k] = v;
+                    k++;
+                    v = predecesores[i][v];
+                }
+
+                for(k = k-1; k >= 0; k--) { //siempre debo hacer alguna asignacion aqui
+                    printf("%d ",aux[k]);
+                    if(k > 0)
+                        printf(" -> ");
+                }
+                printf(" (costo minimo: %d)\n", caminos[i][j]);
+                printf("\n");
+            }
+    }
+}
+
+int main() {
+    int mat[N][N], origen, destino, n, S[N], longCamino;
+    //cargaMat(mat,&n;)
+    printf("Ingrese origen y destino\n");
+    scanf("%d %d",origen, destino);
+    printf("Peso camino minimo: %d",djikstra(mat,n,origen,destino, &longCamino));
+    return 0;
+}

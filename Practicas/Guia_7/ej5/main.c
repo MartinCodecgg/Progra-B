@@ -19,6 +19,7 @@ typedef nodoCAD * ArbolCAD;
 
 //------------------------- PROTOTIPOS -------------------------
 void profundidad(Arbol A, int *maxProfun, int cont);
+int profundidadInt(Arbol A);
 void profundidad2(Arbol A, int *maxProfun, int cont); //optimizado
 void longPalMasLarga(ArbolCAD A2, int *maxLong);
 int longPalMasLargaInt(ArbolCAD A2);
@@ -43,6 +44,8 @@ int main() {
 
     profundidad2(A, &maxProfun, -1); // -1 → así raíz cuenta como nivel 0
     printf("(PROFUNDIDAD2)La maxima profundidad del arbol en cuestion es: %d\n", maxProfun);
+
+    printf("(PROFUNDIDADINT)La maxima profundidad del arbol en cuestion es: %d\n", profundidadInt(A));
 
     longPalMasLarga(A2, &maxLong);
     printf("La longitud de la palabra mas larga del arbol es: %d\n", maxLong);
@@ -91,6 +94,21 @@ void profundidad(Arbol A, int *maxProfun, int cont) {
     }
 }
 
+//version int
+
+int profundidadInt(Arbol A) {
+    int profunIzq, profunDer;
+
+    if(A == NULL)
+        return -1;
+    else {
+        profunIzq = profundidadInt(A->izq);
+        profunDer = profundidadInt(A->der);
+        return 1 + (profunIzq > profunDer ? profunIzq : profunDer); //no sumar parametro adicional para ir sumando en cada iteracion, poner un +1 en el return
+    }   //poner parentesis a los ternarios si los uso junto a otras operaciones como aqui que estoy sumando un uno, en otro caso no necesitan parentesis
+}
+//llamada main: profunidad(A); //en la convencion de que la raiz tiene altura 0, se toma entonces que una hoja tiene altura 0 tambien y que el vacio tiene altura -1, en otro caso no funciona
+//el otro enfoque es que la raiz tiene altura 1, entonces las hojas tambien y por elde el vacio tiene altura 0
 void profundidad2(Arbol A, int *maxProfun, int cont) { //algoritmo optimizado
     if (A) {
         cont++;
@@ -163,5 +181,16 @@ void cantHijosDerechos(Arbol A, int *cant) {
             (*cant)++;
         cantHijosDerechos(A->izq,cant);
         cantHijosDerechos(A->der, cant);
+    }
+}
+
+int cantDer(Arbol A) {
+    if(A == NULL)
+        return 0;
+    else {
+        if(A->der)
+            return 1 + cantDer(A->der) + cantDer(A->izq);
+        else
+            return cantDer(A->izq);
     }
 }

@@ -1,5 +1,7 @@
 #include <stdio.h>
+#define N 50
 #include "colas.h"
+#include "pilas.h"
 
 //funcion auxiliar
 int verifVisitados(int visitados[], int n) {
@@ -9,6 +11,8 @@ int verifVisitados(int visitados[], int n) {
     //return visitados[i]; //acceso fuera de rango cuando el vector esta todo lleno
     return i == n;
 }
+
+//Version optimizada, no conviene llamar a !todosVisitados, conviene usar un n que contenga la dimension de VV
 
 //inciso a) (solo para grafos conexos)
 //a la matriz la supongo cuadrada
@@ -39,28 +43,6 @@ void muestraProfundidad(int mat[][N],int n, int ini) {
 }
 //llamada main: muestraProfundidad(mat, n, 3); //o cualquier vertice para iniciar
 
-/*
-void recorreAmplitud(int mat[][N], int n, int inicial) {
-    int visitados[N] = {0};
-    TCola Cola;
-    int j, vertice;
-
-    poneC(&Cola, inicial);
-    visitados[inicial] = 1;
-
-    while(!Vacia(Cola)) {
-        sacaC(&Cola, &vertice);
-        printf("%d\n",inicial); //siempre imprimo cuando saco de la cola
-        for(j = 0; j < n; j++) {
-            if(mat[vertice][j] != 0 && visitados[j] != 1) {
-                poneC(&Cola,j); //tanto en el vector como en la cola pongo posiciones/indices y no los valores de los vertices(claves)
-                visitados[j] = 1;
-            }
-        }
-    }
-}
-*/
-
 //inciso b
 void recorreAmplitud(int mat[][N], int n, int inicial) {
     int visitados[N] = {0}, j, vertice;
@@ -70,10 +52,10 @@ void recorreAmplitud(int mat[][N], int n, int inicial) {
     poneC(&Cola, inicial);
     visitados[inicial] = 1;
 
-    while(!VaciaC(Cola)) { //preguntar si verificar que no quede vacia la cola o recorrer al arreglo
+    while(!VaciaC(Cola)) { //preguntar si verificar que no quede vacia la cola o recorrer al arreglo , //mientras no todos visitados
         sacaC(&Cola, &vertice);
         printf("%d\n",vertice); //conviene imprimir aqui porque sino debere imprimir el vertice inicial
-        //printf("%d\n",inicial); //siempre imprimo cuando saco de la cola (En el video dice que hay que marcar al poner en la cola)
+        //printf("%d\n",inicial); //siempre imprimo cuando saco de la cola (En el video dice que hay que marcar al imprimir en la cola)
         for(j = 0; j < n; j++)
             if(mat[vertice][j] != 0 && visitados[j] != 1) {
                 poneC(&Cola,j); //tanto en el vector como en la cola pongo posiciones/indices y no los valores de los vertices(claves)

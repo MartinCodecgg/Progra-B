@@ -10,7 +10,7 @@ typedef nodo * Arbol;
 
 // ==================== TUS FUNCIONES ORIGINALES (SIN CAMBIOS) ====================
 
-//La verdad no estoy del todo seguro de si funciona el 20a, las pruebas de la IA creo que estan MAL
+//La verdad no estoy del todo seguro de si funciona el 21a, las pruebas de la IA creo que estan MAL
 void altura(Arbol A, int k, int *alturaMax, int cont) { //verificada
     if(A && *alturaMax < k) {
         if(A->izq)
@@ -22,7 +22,7 @@ void altura(Arbol A, int k, int *alturaMax, int cont) { //verificada
         if (cont > *alturaMax)
             *alturaMax = cont;
 }
-
+//21 a auxiliar
 void cantH(Arbol A, int k, int *cant) { //verificada
     int alturaAct;
     while(A) {
@@ -34,14 +34,38 @@ void cantH(Arbol A, int k, int *cant) { //verificada
     }
 }
 
+//21 a) Con funcion int
+
+int cantA(Arbol AB, int k) {
+    int cont = 0;
+    Arbol act = AB;
+    while(act) {
+        if((k == 0 && act->izq == NULL) || alturaInt(act->izq,1,k)) //logica adicional para k = 0
+            cont++;
+        act = act->der;
+    }
+    return cont;
+}
+
+int alturaInt(Arbol AB, int altu, int k) {
+    if(AB == NULL)
+        return 0;
+    else {
+        if(altu < k)
+            return alturaInt(AB->izq, altu + 1, k) || alturaInt(AB->der, altu, k);
+        else
+            return 1;
+    }
+}
+
 //21b auxiliar
 int maxClave(Arbol A) { //verificada
     int maxIzq, maxDer, aux;
     if(A) {
         maxIzq = maxClave(A->izq);
         maxDer = maxClave(A->der);
-        aux = (maxIzq > maxDer) ? maxIzq : maxDer;
-        if (A->dato > aux) //recordar que debo comparar el mismo nodo con su derecha e izquierda
+        aux = (maxIzq > maxDer) ? maxIzq : maxDer; //conviene encontrar el maximo o minimo de los hijos y luego comparar aux con el adtual, es mas prolijo
+        if (A->dato > aux)
             aux = A->dato;
         return aux;
     }
@@ -77,6 +101,7 @@ void gradoArbolG(Arbol AB, int k, int cont, int *OK) { //verificada
 }
 
 //21c
+//funcion auxiliar
 void verificar(Arbol A, int k, int *cond) { //verificada
     int OK;
     while(A) {
@@ -87,6 +112,36 @@ void verificar(Arbol A, int k, int *cond) { //verificada
         A = A->der;
     }
 }
+
+//21c INT
+int tieneGrK(Arbol AB, int k) {
+    Arbol act = AB;
+    int tiene = 0, gr = 0;
+    while(act != NULL && !tiene && gr != k) {
+        gr++;
+        if(act->izq && tieneGrK(AB->izq,k))
+            tiene = 1;
+        act = act->der;
+    }
+    if(gr == k)
+        tiene = 1;
+    return tiene;
+}
+//
+int verif(Arbol AB, int k) {
+    Arbol act = AB; 
+    int todosTienen = 1;
+    while(act && todosTienen) {
+        if(!tieneGrK(act->izq,k))
+            todosTienen = 0;
+        act = act->der;
+    }
+    return todosTienen;
+}
+
+
+
+
 
 
 // ==================== FUNCIONES AUXILIARES ====================
@@ -442,7 +497,7 @@ int main() {
     int k = 2, cond = 1;
     verificar(A, k, &cond);
     if(cond)
-        printf("Se verifica que todos los árboles contengan al menos un nodo de grado K");
+        printf("Se verifica que todos los ï¿½rboles contengan al menos un nodo de grado K");
     */
     return 0;
 }
