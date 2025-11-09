@@ -16,7 +16,7 @@ typedef struct nodoL {
 
 typedef nodoL * TLista;
 
-void cantN(Arbol AB, int *contNoDigit, int *cont2Digit) {
+void cantN(Arbol AB, int *contNoDigit, int *cont2Digit) { //verif con sonnet 4.5, 
     if(AB) {
         if(AB->izq != NULL && AB->der == NULL || AB->izq == NULL && AB->der == NULL)
             if(AB->cad < '0' || AB->cad > '9')
@@ -29,34 +29,39 @@ void cantN(Arbol AB, int *contNoDigit, int *cont2Digit) {
     }
 }
 
-int determinar(ArbolG A, Pos p, int nivel, int k) {
+int determinar(ArbolG A, Pos p, int nivel, int k) { //verif con sonnet 4.5
     ArbolG c;
-    int hijoCumple = 1, acum = 0, gr = 0, dato = info(p,A);
-    if(Nulo(p))
+    int hijoCumple = 1, acum = 0, gr = 0, dato, positivo = 0;
+
+    if(Nulo(p) || nivel == k)
         return 1;
     else {
-        nivel++;
-        if(dato > 0) {
-            c = hijoMasIzq(p,A);
-            if(!Nulo(c)) {
-                while(!Nulo(c) && hijoCumple) {
-                    gr++;
-                    acum += info(c,A);
-                    if(nivel < k) // recordar < k y no < k - 1
-                        hijoCumple = determinar(A, c, nivel, k);
-                    c = hnoDer(c,A);
-                }
-                if(gr % 2 == 0)
-                    return (float) acum / gr >= 2 * dato && hijoCumple;
+        c = hijoMasIzq(p,A);
+        if(Nulo(c))
+            return 1;
+        else {
+            dato = Info(p, A);
+            if(dato > 0) 
+                positivo = 1;
+
+            while(!Nulo(c) && hijoCumple) {
+                gr++;
+                acum += Info(c,A);
+                hijoCumple = determinar(A, c, nivel + 1, k);
+                c = hnoDer(c,A);
+            }
+            if(!hijoCumple)
+                return 0;
+            else
+                if(gr % 2 == 0 && positivo)
+                    return ((float) acum / gr >= 2 * dato);
                 else
                     return 1;
-            }
         }
-        return 1;
     }
 }
 
-void cantV(TLista vec[], int n,int * contV) {
+void cantV(TLista vec[], int n,int * contV) { //verif con renzo
     int i, tieneArista, pesoBucle, min;
     TLista act, ant, elim, antElim;
 

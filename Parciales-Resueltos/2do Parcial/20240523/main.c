@@ -9,6 +9,8 @@ typedef struct nodo{
 
 typedef nodo * Arbol;
 
+//inciso a
+// verif con resolucion
 int determinar(Arbol AB) {
     int Gcumple = 1,gr;
     Arbol bosque, a;
@@ -19,7 +21,7 @@ int determinar(Arbol AB) {
         bosque = AB;
         while(bosque && Gcumple) {
             a = bosque->izq;
-            gr = 0;
+            gr = 0; 
             while(a) {
                 gr++;
                 a = a->der;
@@ -31,6 +33,7 @@ int determinar(Arbol AB) {
     }
 }
 
+//auxiliar
 int arbolCumple(Arbol AB, int grRaiz) {
     int gr = 0;
     Arbol act;
@@ -58,7 +61,7 @@ int main () {
 }
 
 
-//Inciso b)
+//Inciso b) //verif por prof
 int grado(ArbolG AG, Pos p) {
     int gr = 0;
     Pos c = hijoMasIzq(p, AG);
@@ -93,7 +96,7 @@ int determinar(ArbolG AG, Pos p) {
     }
 }
 
-//inciso C
+//inciso C // verif con prof
 
 int cantN(int mat[][N], int i, int j, int n, int cantI, int cantj) {
     if(i < 0)

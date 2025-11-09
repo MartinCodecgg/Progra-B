@@ -43,7 +43,7 @@ int determinar(Arbol ABB) { //verif
 */
 
 //Inciso a) Corregido
-
+//verif con renzo
 int verif(Arbol ABB) {
     int condIzq, condDer;
 
@@ -53,7 +53,7 @@ int verif(Arbol ABB) {
         if(ABB->num < 0)
             return verif(ABB->der);
     else {
-        if(ABB->izq == NULL)
+        if(ABB->izq == NULL).
             condIzq = 1;
         else
             condIzq = ABB->izq->dato % 2 == ABB->dato % 2;
@@ -68,12 +68,11 @@ int verif(Arbol ABB) {
             return 0;
     }
 }
-
+//verif con sonnet 4.5
 void mayores2(ArbolG AG, int *clave1, int *clave2, Pos p, int nivel) { //verif
     Pos c;
     int aux;
     if(!Nulo(p)) {
-        nivel++;
         aux = Info(p,AG);
         if(nivel % 2 != 0) {
             if(aux > *clave1) {
@@ -86,7 +85,7 @@ void mayores2(ArbolG AG, int *clave1, int *clave2, Pos p, int nivel) { //verif
         }
         c = hijoMasIzq(p,AG);
         while(!Nulo(c)) {
-            mayores2(AG, clave1, clave2, c, nivel);
+            mayores2(AG, clave1, clave2, c, nivel + 1);
             c = hnoDer(c, AG);
         }
     }
@@ -113,15 +112,16 @@ void costoAAM(int k[][N], int *acum, int *contAX, int x, int i, int j, int n) { 
     }
 }
 */
-
-void rec(int k[][N], int *costoAAM, int *contX, int i, int j, int n, int x) {
-    if(i >= 0) {
+//verif con renzo
+void rec(int k[][N], int *costoAAM, int *contX, int i, int j, int n, int x, int nAristas) {
+    if(i >= 0 && nAristas < n-1) { //En kruscal, si ya analize las n-1 aristas no me interesa seguir analizando.
         costoAAM += k[i][j];
+        nAristas++;
         contX += (i == x || j == x) && k[i][j] != 0;
         if(j > i + 1)
-            rec(k, costoAAM, contX, i, j-1, n,x);
+            rec(k, costoAAM, contX, i, j-1, n,x, nAristas);
         else
-            rec(k, costoAAM, contX, i-1, n,n,x); 
+            rec(k, costoAAM, contX, i-1, n,n,x, nAristas); 
     }
 }
 

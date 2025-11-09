@@ -1,0 +1,201 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    printf("Hello world!\n");
+    return 0;
+}
+
+/**
+Dada una pila p de registros(3 campos:
+    numero de barrio,
+    nro de lote
+    maxmimo m construidos permitidos)
+que contiene los topes de construccion por barrio; y dada una Lista Simplemente Enlazada con
+sublista que contiene la siguiente infromación de los terrenos relevados:
+    -num de barrio(1 a 10)-ordenada
+    -sublista de construcciones
+        *DNI propietario(cadena de 9, podria repetirse)
+        *numero de lote(1 a 300)
+        *m construidos
+a partir de ambas estructuras y utlizando el tda pila se pide:
+i) generar una lista DE con los lotes relevados que hayan excedido lo que podian construir.
+-DNI propietario-ordenada(no se repite)
+-m total excedidos-
+-cant lotes en los que se ha excedido*/
+
+// pila
+typedef struct
+{  int numBarrio;
+   int numLote;
+   int maximo;
+}telementop;
+
+
+typedef struct
+{  telementop datos[50];
+    int tope;
+}tpila;
+// sublista
+typedef struct nodito{
+    char dni[];
+    int numLote;
+    int mConstruidos;
+    struct nodito*sig;}nodito;
+typedef nodito *Sublista;
+
+//  lista
+typedef struct nodo{
+    int numBarrio;
+    Sublista sub;
+    struct nodo*sig;}nodo;
+typedef nodo*TLista;
+
+// lista doble
+typedef struct nodoD{
+    char dni[];
+    int mExcedidos;
+    int cantLotes;
+    struct nodoD*sig,*ant;}nodoD;
+typedef struct nodoD* TnodoD;
+typedef struct
+{ TnodoD pri,ult;
+}TListaD;
+
+void GeneraLD (TLista L, TPila *P, TListaD *LD){
+    telementop elem;
+    TLista aux;
+    Sublista auxs;
+    TnodoD nuevo, act;
+    while (!VaciaP(*P)){
+        SacaP(P, elem);
+        aux=L;
+        while (aux && aux->numBarrio<elem.numBarrio)
+            aux=aux->sig;
+        if (aux && aux->numBarrio==elem.numBarrio){
+            auxs=aux->sub;
+            while(auxs && auxs->numLote!=elem.numLote)
+                auxs=auxs->sig;
+            if (auxs && auxs->mConstruidos>elem.maximo){
+                nuevo=(TnodoD)malloc(sizeof(nodoD));
+                nuevo->cantLotes=1;
+                nuevo->mExcedidos=auxs->mConstruidos-elem.maximo;
+                strcpy(nuevo->dni, auxs->dni);
+                if (LD->pri==NULL){
+                    nuevo->sig=nuevo->ant=NULL;
+                    LD->pri=LD->ult=nuevo;
+                }
+                else{
+                    if (strcmp(auxs->dni, LD->ult->dni)>0){
+                        nuevo->sig=NULL;
+                        nuevo->ant=LD->ult;
+                        LD->ult->sig=nuevo;
+                        LD->ult=nuevo;
+                    }
+                    else{
+                        act=LD->pri;
+                        while (act && strcmp(act->dni, auxs->dni)<0)
+                            act=act->sig;
+                        if (act && strcmp(act->dni, auxs->dni)==0){
+                            act->cantLotes++;
+                            act->mExcedidos+=auxs->mConstruidos-elem.maximo;
+                            free(nuevo);
+                        }
+                        else{
+                            nuevo->sig=act;
+                            nuevo->ant=act->ant;
+                            act->ant->sig=nuevo;
+                            act->ant=nuevo;
+                        }
+                    }
+                }
+            }
+            auxs=auxs->sig;
+            }
+
+        }
+    }
+
+}
+
+/**El propietario con DNI P abonara la multa correspondiente.
+ Eliminarlo de la lista doble,indicando cuanto debera abonar,
+siendo $k por cada metro excedido, mas un 10% si tiene mas de
+ 5 construcciones excedidas(p y k son datos de entrada).*/
+
+ void ELimina (TListaD *LD, char DNI[], int k){
+     TnodoD act=LD->pri;
+     float total=0;
+    while (act && strcmp(act->DNI, DNI)<0)
+        act=act->sig;
+        if (act && strcmp(act->DNI, DNI)==0){
+            total=k*act->mExcedidos;
+            if (act->cantLotes>5)
+                total*=1.1;
+            printf("Debe abonar %f pesos.", total);
+            if (act==LD->pri)
+                if (LD->pri==LD->ult)
+                    LD->pri=LD->ult=NULL;
+                else{
+                    LD->pri->sig->ant=NULL;
+                    LD->pri=LD->pri->sig;
+                }
+            else{
+                if (act==LD->ult){
+                    LD->ult->ant->sig=NULL;
+                    LD->ult=LD->ult->ant;
+                }
+                else{
+                    act->ant->sig=act->sig;
+                    act->sig->ant=act->ant;
+                }
+            }
+            free(act);
+        }
+ }
+
+ /**3)Utilizar TDA Nario
+Se tiene un n-ario de numeros enteros AN,determinar si todas las apariciones de k en AN se da en niveles pares
+(k dato de entrada)*/
+
+int Verifica(TArbolN A, posicion p, int k, int nivact){
+    posicion c;
+    if (!nulo(p)){
+        if (info(p,A)==k && nivact%2)
+            return 0;
+        else
+            return Verifica(A, HijoMIzq(p,A), k, nivact+1) && Verifica(A, HnoDer(p,A), k, nivact);
+    }
+    else
+        return 1;
+}
+
+/**
+ 4)Dado un grafo con aristas ponderadas implementado en una lista de adyacencia, en la que en cada nodo de las listas
+se tiene ademas del vertice y el peso, un valor 1 o 0 segun si esa arista pertenece o no al AMM.
+Desarrollar una funcion que permita determinar el costo del AAM y
+la cantidad de aristas que lo conforman
+*/
+
+typedef struct nodo{
+    int vert, peso, pert;
+    struct nodo* sig;}nodo;
+typedef nodo* TLista;
+
+void AAM (TLista vec[], int n, int *costo, int *cant){
+    TLista aux;
+    int i;
+    for (i=0; i<n; i++){
+        aux=vec[i];
+        while (aux){
+            if (aux->pert){
+                (*costo)+=aux->peso;
+                (*cant)++;
+            }
+            aux=aux->sig;
+        }
+    }
+    (*costo)/=2;
+    (*cant)/=2;
+}
