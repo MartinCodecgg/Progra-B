@@ -16,7 +16,7 @@ Arbol crearNodo(int dato) {
     return nuevo;
 }
 
-//20a
+//20a (REHACER, solo deberia aumentar el cont (nivel) cuando bajo a izq)
 int cantNenNivImpares(Arbol A, int cont) {
     if(A) {
         cont++;
