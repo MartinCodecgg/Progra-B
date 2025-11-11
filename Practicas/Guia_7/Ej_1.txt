@@ -5,7 +5,8 @@ preorden:
 
 inorden:
 3-8-6-5-2-1-4 mal
-3-8-6-5-4-1-2 bien
+3-8-6-5-4-1-2 mal
+3 8 6 5 1 2 4
 (como el 4 del subárbol derecho no tiene izquierdo entonces se visita primero el 4)
 
 postOrden:
