@@ -1,3 +1,5 @@
+
+//REHACER EJERCICIO, USAR WHILE PARA RECORRER IZQ Y CORTAR ANTES DE LLEGAR AL NULL
 #include <stdio.h>
 #include <stdlib.h>
 
