@@ -24,7 +24,7 @@ void elimina(TLista *L, char pal[]) { //verif
         antL = actL;
         actL = actL->sig;
     }
-    if(actL && strcmp(pal,actL->pal) == 0) {
+    if(actL) {
         if(actL == *L)
             *L = (*L)->sig;
         else
@@ -158,7 +158,7 @@ void eliminaSucesiva(TListaD *LD) { //verif
             }
             else
                 act = act->sig;
-        }
+Â Â Â Â Â Â Â Â }
 }
 
 void insertaOrd(TListaD *LD, char pal[]) { //verif
