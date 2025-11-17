@@ -43,10 +43,10 @@ void generaP(TPila *P, TLista L) {
 
     while(aux != NULL) {
         max = -9999;
-        poneC(&(aux->C),cent);
+        poneC(&(aux->C),cent); 
         sacaC(&(aux->C),&elem);
         while(elem != cent) {
-            poneC(&(aux->C),elem);
+            poneC(&(aux->C),elem); //corregir, los pone y saca deberian ir despues del if
             sacaC(&(aux->C),&elem);
             if(elem != cent && elem > max)
                 max = elem;
