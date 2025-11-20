@@ -21,8 +21,8 @@ int kruscal(int mat[][N], int n, Tarista arbolGen[]) {
         CC[i] = i;
    while(nArbolGen < n-1) { //aqui como guardo aristas es hasta n - 1, corresponde con la cantidad de aristas ideales
         costoMin = 99999;
-        for(i = 0; i < n-1; i++)
-                for(j = i+1; j < n; j++)
+        for(i = 0; i < n; i++) //recorro filas
+                for(j = i+1; j < n; j++) //recorro columnas, (como busco aristas y la matriz es simetrica, me conviene solo buscar en el triangulo superior)
                     if(mat[i][j] != 0 && mat[i][j] < costoMin && CC[i] != CC[j]) {
                         costoMin = mat[i][j];
                         Vmin = i;

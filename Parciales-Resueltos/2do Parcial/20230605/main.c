@@ -1,5 +1,6 @@
 //ejercicio 2) b
 //verif con sonnet 4.5
+//REHACER- DEBIO SER VOID
 int existe(ArbolG AG, Pos p, int G, int acum) {
     int gr = 0, dato;
     Pos c;

@@ -112,12 +112,12 @@ void costoAAM(int k[][N], int *acum, int *contAX, int x, int i, int j, int n) { 
     }
 }
 */
-//verif con renzo
+//verif con renzo + sonnet 4.5
 void rec(int k[][N], int *costoAAM, int *contX, int i, int j, int n, int x, int nAristas) {
     if(i >= 0 && nAristas < n-1) { //En kruscal, si ya analize las n-1 aristas no me interesa seguir analizando.
-        costoAAM += k[i][j];
-        nAristas++;
-        contX += (i == x || j == x) && k[i][j] != 0;
+        *costoAAM += k[i][j];
+        nAristas += k[i][j] != 0;
+        *contX += (i == x || j == x) && k[i][j] != 0;
         if(j > i + 1)
             rec(k, costoAAM, contX, i, j-1, n,x, nAristas);
         else
