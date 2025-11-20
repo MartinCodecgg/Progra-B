@@ -37,7 +37,7 @@ void muestraCamino(int P[], int v) {
             v = P[v];
         }
         poneP(&P,v);// esto es para mostrar/apilar el origen (0  en este caso)
-
+        //usar while(!VaciaP(P))
         for(i = tam; i >= 0; i--) {
             sacaP(&P,&elem)
             printf("%d\t",elem);

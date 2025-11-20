@@ -99,7 +99,7 @@ int determinar(int mat[][N], int vertices, int x) {
 }
 
 //LLamada Main:
-//int resultado = determinar(mat, N-1, 4);  // Empieza desde vértice N-1
+//int resultado = determinar(mat, N-1, 4);  // Empieza desde vÃ©rtice N-1
 //printf("Resultado: %d\n", resultado);  // 1 = TODOS cumplen
 
 void generaVgrMayorA3(mat[][N], Tvec vec[],int *nvec, int i, int j, int n, int gr) {
@@ -117,6 +117,7 @@ void generaVgrMayorA3(mat[][N], Tvec vec[],int *nvec, int i, int j, int n, int g
         }
     }
 }
+//El gr > 3 deberia preguntarse antes del j > 0, y tomando esta conveccion, poner otra condicion que cambie fila si j = 0 o gr > 3
 
 //llamada inicial: int nvec = 0;
 //generaVgrMayorA3(mat, vec, &nvec, N-1, N-1, N-1, 0);
