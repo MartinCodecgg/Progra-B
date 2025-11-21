@@ -172,7 +172,6 @@ void eliminaLD(TListaD *LD, char pal[]) { //verif
                 LD->pri = NULL;
                 LD->ult = NULL;
             }
-<<<<<<< HEAD
             else {                  //cabeza pri
                 LD->pri->sig->ant = NULL;
                 LD->pri = LD->pri->sig;
@@ -187,21 +186,23 @@ void eliminaLD(TListaD *LD, char pal[]) { //verif
                 free(aux);
             }
         else {
-            aux = aux->sig; //adelanto el primero
-            while(aux && strcmp(pal,aux->pal) > 0) //otro
-                aux = aux->sig;
+            if(strcmp(pal, LD->ult->pal) < 0) {
+                aux = aux->sig; //adelanto el primero
+                while(strcmp(pal,aux->pal) > 0) //otro
+                    aux = aux->sig;
 
-            if(aux && strcmp(pal,aux->pal) == 0) {
-                aux->ant->sig = aux->sig;
-                aux->sig->ant = aux->ant;
-                free(aux);
+                if(strcmp(pal,aux->pal) == 0) {
+                    aux->ant->sig = aux->sig;
+                    aux->sig->ant = aux->ant;
+                    free(aux);
+                }
             }
         }
-=======
+            /*
             else
                 act = act->sig;
-        }
->>>>>>> b0ed4979b318b7637fd7b975749877eb840737fc
+            */
+
 }
 
 void eliminaSucesiva(TListaD *LD) { //verif, verif 2
@@ -295,8 +296,8 @@ void insertaOrd(TListaD *LD, char pal[]) { //verif
             LD->ult = new;
     }
     else {
-        aux = LD->pri;
-        while(aux && strcmp(pal,aux->pal) > 0)
+        aux = LD->pri->sig;
+        while(strcmp(pal,aux->pal) > 0)
             aux = aux->sig;
 
         new->sig = aux;

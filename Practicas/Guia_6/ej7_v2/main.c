@@ -11,7 +11,6 @@ typedef struct nodito {
 
 typedef nodito * SubLista;
 
-
 typedef struct nodo {
     char nom[N];
     SubLista sub;
@@ -89,7 +88,7 @@ void enlazayDesenlaza(TLista *Lorigen, TLista *Ldestino, char titulo[], char nom
     if(act) {
         actS = act->sub;
         buscaPosLibro(&actS, &antS, titulo); //busco pos del libro
-        libro = actS; //el libro que quiero desenlanzar 
+        libro = actS; //el libro que quiero desenlanzar
 
         if(libro) {
             if(actS == act->sub) //desenlaza
@@ -111,7 +110,7 @@ void enlazayDesenlaza(TLista *Lorigen, TLista *Ldestino, char titulo[], char nom
 
             if(act == NULL ||strcmp(act->nom,nomDestino) != 0) //Si el autor o socio no existe crearlo e insertarlo (act ya apunta a la posicion a insertar)
                 insertaAutorSocio(Ldestino, &act, ant, nomDestino);
-            
+
             actS = act->sub;
             buscaPosLibro(&actS, &antS, titulo);
 
@@ -142,7 +141,7 @@ void prestamosYdevoluciones(TLista vec[], TLista *socios) {
     if(opcion == 'P')
         enlazayDescenlaza(&vec[aux],socios, titulo, autor, socio);  //es mejor pasar el vector evaluado en la posicion de la lista que hacer aux = vec[toupper(autor[0] - 'A'], porque si luego para actualizar la posicion del vector es un bardo
     else
-        enlazayDescenlaza(&vec[aux],socios, titulo, socio, autor);  
+        enlazayDescenlaza(&vec[aux],socios, titulo, socio, autor);
 }//recordar usar &vec[aux] si le paso un puntero de array de punteros
 
 int main() {
