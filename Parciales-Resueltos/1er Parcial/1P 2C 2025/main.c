@@ -65,13 +65,9 @@ void elimina(TL *L, TLD *LD, int cant[], char tipos[]) {
             free(antS);
         }
         elim = act;
-        if(act == *L) {
-            *L = (*L)->sig;
-            act = *L;
-        }
-        else
-            act = act->sig; //recordar que si elimino el nodo al que apunta L, debere de actualizar L
-
+        if(act == *L) 
+            *L = (*L)->sig; // act = act->sig; //recordar que si elimino el nodo al que apunta L, debere de actualizar L
+        act = act->sig;
         free(elim);
     }
 }

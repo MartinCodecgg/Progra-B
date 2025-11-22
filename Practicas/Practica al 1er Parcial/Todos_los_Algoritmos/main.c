@@ -191,7 +191,7 @@ void eliminaLD(TListaD *LD, char pal[]) { //verif
                 while(strcmp(pal,aux->pal) > 0) //otro
                     aux = aux->sig;
 
-                if(strcmp(pal,aux->pal) == 0) {
+                if(strcmp(pal,aux->pal) == 0) { //no hace falta preguntar por el aux, porque ya habiendo verificado el ultimo antes, no me caere
                     aux->ant->sig = aux->sig;
                     aux->sig->ant = aux->ant;
                     free(aux);
