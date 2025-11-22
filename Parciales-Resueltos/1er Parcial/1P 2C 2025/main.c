@@ -40,11 +40,13 @@ void elimina(TL *L, TLD *LD, int cant[], char tipos[]) {
     TElementoC elem;
     int pos;
     SubLista actS, antS;
-    TL act, elim;
+    TL act, ant, elim;
 
     act = *L;
-    while(act && act->nro < 100) //ciclar los pisos menores al 1ro
+    while(act && act->nro < 100) {//ciclar los pisos menores al 1ro
+        ant = act; //podria darse el caso que L apunte a alguna habitacion de planta baja
         act = act->sig;
+    }
 
     while(act && act->nro < 200) {
         actS = act->sub;
@@ -65,11 +67,15 @@ void elimina(TL *L, TLD *LD, int cant[], char tipos[]) {
             free(antS);
         }
         elim = act;
-        if(act == *L) 
-            *L = (*L)->sig; // act = act->sig; //recordar que si elimino el nodo al que apunta L, debere de actualizar L
+        //if(act == *L)  //logica innecesaria, una vez elimino todos los pisos recien muevo L
+            //. *L = (*L)->sig
         act = act->sig;
         free(elim);
     }
+    if(ant)
+        ant->sig = act; //reconectar los anteriores de la planta baja con el 2do piso
+    else
+        *L = act; //si no habia planta baja, L debera apuntar a la primer hab del 2do piso
 }
 
 char tipoMax(int cant[], char tipos[], int i, int iMax) {
