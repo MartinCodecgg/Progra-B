@@ -16,7 +16,7 @@ int gradoE(TLista vec[], int V) {
         act = vec[i];
         while(act != NULL) {
             if(act->vertice == V)
-                gr++;
+                gr++; //si aclarase que no trabajamos con multigrafos, bastaria con encontrarlo una vez y ya salir
             act = act->sig;
         }
     }
@@ -45,7 +45,7 @@ int gradoTot(TLista vec[], int V) {
         return gradoE(vec, V) + gradoS(vec, V);
 }
 
-// FunciÛn auxiliar para agregar una arista
+// Funci√≥n auxiliar para agregar una arista
 void agregarArista(TLista vec[], int origen, int destino) {
     TLista nuevo = (TLista)malloc(sizeof(nodo));
     nuevo->vertice = destino;
@@ -53,7 +53,7 @@ void agregarArista(TLista vec[], int origen, int destino) {
     vec[origen] = nuevo;
 }
 
-// FunciÛn para imprimir el grafo
+// Funci√≥n para imprimir el grafo
 void imprimirGrafo(TLista vec[]) {
     printf("\nLista de adyacencia:\n");
     for(int i = 0; i < N; i++) {
@@ -90,12 +90,12 @@ int main() {
     agregarArista(grafo, 2, 0);
     agregarArista(grafo, 2, 1);
     agregarArista(grafo, 3, 1);
-    agregarArista(grafo, 4, 4);  // Lazo en vÈrtice 4
+    agregarArista(grafo, 4, 4);  // Lazo en v√©rtice 4
 
     // Imprimir el grafo
     imprimirGrafo(grafo);
 
-    // Probar las funciones con diferentes vÈrtices
+    // Probar las funciones con diferentes v√©rtices
     printf("\n=== ANALISIS DE GRADOS ===\n");
 
     for(int v = 0; v <= 4; v++) {
@@ -105,12 +105,12 @@ int main() {
         printf("  Grado total:      %d\n", gradoTot(grafo, v));
     }
 
-    // Caso especial: vÈrtice con lazo
+    // Caso especial: v√©rtice con lazo
     printf("\n=== NOTA ===\n");
     printf("El vertice 4 tiene un lazo (4->4)\n");
     printf("Por eso su grado total es (1+1-1) = 1\n");
 
-    // Liberar memoria (opcional pero buena pr·ctica)
+    // Liberar memoria (opcional pero buena pr√°ctica)
     for(int i = 0; i < N; i++) {
         TLista act = grafo[i];
         while(act != NULL) {
