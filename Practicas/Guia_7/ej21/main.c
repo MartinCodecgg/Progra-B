@@ -117,17 +117,17 @@ void verificar(Arbol A, int k, int *cond) { //verificada
 int tieneGrK(Arbol AB, int k) {
     Arbol act = AB;
     int tiene = 0, gr = 0;
-    while(act != NULL && !tiene && gr != k) {
+    while(act != NULL && !tiene && gr != k) { //el gr != k no esta bien, porque puede que luego se siga sumando y al final no quede gr = k
         gr++;
-        if(act->izq && tieneGrK(AB->izq,k))
-            tiene = 1;
+        if(act->izq && tieneGrK(AB->izq,k)) //tiene sentido verificar A->izq?, igual se verifica en la condicion del while cuando llamo a la funcion
+            tiene = 1;                    // no seria act->izq enves de AB->izq ?
         act = act->der;
     }
     if(gr == k)
         tiene = 1;
     return tiene;
 }
-//
+
 int verif(Arbol AB, int k) {
     Arbol act = AB; 
     int todosTienen = 1;
